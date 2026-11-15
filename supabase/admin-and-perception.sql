@@ -72,6 +72,8 @@ insert into site_settings (key, value) values
   ('session_fee', '₹1,500 · 50 min'),
   ('clients_count', '1000'),
   ('research_count', '15'),
+  ('hero_stat4_label', 'Session format'),
+  ('hero_stat4_value', 'Online & In-person'),
   ('hero_lead', 'Psychotherapy, psychology research and training in Bengaluru and online across India, led by psychologist Isha Tiwari.'),
   ('cta_title', 'Taking the first step is often the hardest'),
   ('cta_text', 'Send a booking request, call or WhatsApp. We''ll reply within 24 hours.')

@@ -147,8 +147,8 @@ export function Hero({ settings }: { settings: SiteSettings }) {
             <dd><span className="roll" data-to={researchCount} data-suffix="+">{researchCount}+</span></dd>
           </div>
           <div style={{ '--i': 3 }}>
-            <dt>In Bengaluru now</dt>
-            <dd className="now-dd" id="now">Online across India</dd>
+            <dt>{settings.hero_stat4_label || 'Session format'}</dt>
+            <dd className="now-dd" id="now">{settings.hero_stat4_value || 'Online & In-person'}</dd>
           </div>
         </dl>
       </div>

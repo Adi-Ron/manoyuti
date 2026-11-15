@@ -15,6 +15,8 @@ export const DEFAULT_SETTINGS = {
   session_fee: '₹1,500 · 50 min',
   clients_count: '1000',
   research_count: '15',
+  hero_stat4_label: 'Session format',
+  hero_stat4_value: 'Online & In-person',
   hero_lead:
     'Psychotherapy, psychology research and training in Bengaluru and online across India, led by psychologist Isha Tiwari.',
   cta_title: 'Taking the first step is often the hardest',
@@ -48,7 +50,9 @@ export const SETTINGS_GROUPS: { title: string; description?: string; fields: Set
       { key: 'hero_lead', label: 'Hero introduction copy', type: 'textarea', span: 'full' },
       { key: 'clients_count', label: 'Clients supported (number)', hint: 'Used in the animated metric counter', span: 'half' },
       { key: 'research_count', label: 'Research projects (number)', hint: 'Used in the animated metric counter', span: 'half' },
-      { key: 'session_fee', label: 'Individual session fee line', hint: 'For example: ₹1,500 · 50 min', span: 'full' }
+      { key: 'session_fee', label: 'Individual session fee line', hint: 'For example: ₹1,500 · 50 min', span: 'full' },
+      { key: 'hero_stat4_label', label: '4th metric label', hint: 'e.g. Session format, Clinical experience, or Consultation mode', span: 'half' },
+      { key: 'hero_stat4_value', label: '4th metric value', hint: 'e.g. Online & In-person, 8+ Years, or Bengaluru & Online', span: 'half' }
     ]
   },
   {
