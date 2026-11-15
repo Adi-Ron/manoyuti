@@ -73,7 +73,11 @@ function BookingForm() {
     const { name, value, type } = e.target;
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: toggleArray(prev[name as 'days' | 'times'], value) }));
+      if (name === 'consent') {
+        setFormData(prev => ({ ...prev, consent: checked }));
+      } else {
+        setFormData(prev => ({ ...prev, [name]: toggleArray(prev[name as 'days' | 'times'], value) }));
+      }
     } else if (type === 'radio') {
       setFormData(prev => ({ ...prev, [name]: value }));
     } else {
@@ -222,15 +226,49 @@ function BookingForm() {
                 <div className="field"><label htmlFor="b-first">Have you seen us before?</label><select id="b-first" name="first" value={formData.first} onChange={handleChange}><option>This would be my first session</option><option>I'm a returning client</option></select></div>
               </div>
               <div className="field"><label htmlFor="b-note">Anything you'd like us to know <span className="opt-l">(optional)</span></label><textarea id="b-note" name="note" placeholder="For example, a language preference, or whether you'd prefer a female therapist" value={formData.note} onChange={handleChange} /><p className="hint">Please keep this brief. There's no need to share health details here; we'll talk about what brings you in during your first session.</p></div>
-              <label className="consent"><input type="checkbox" name="consent" id="b-consent" checked={formData.consent} onChange={handleChange} required /> I understand Resilio is not an emergency service, and I'm happy to be contacted about this request. <Link href="/policies/">Privacy and cancellation policies</Link></label>
-              <p className="err" id="e-you" hidden={!errors.consent && !errors.name && !errors.email}>Add your name, a valid email, and tick the box above.</p>
+              <div className="consent-card">
+                <label className="consent-row" htmlFor="b-consent">
+                  <input
+                    type="checkbox"
+                    name="consent"
+                    id="b-consent"
+                    checked={formData.consent}
+                    onChange={handleChange}
+                    required
+                  />
+                  <span className="consent-text">
+                    <strong>I understand Resilio is not an emergency service</strong>, and I am happy to be contacted about this booking request.
+                  </span>
+                </label>
+                <div className="consent-policy-note">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  <span>
+                    Your details are kept strictly confidential. Please review our{' '}
+                    <Link href="/policies/#privacy" className="policy-link" target="_blank" rel="noopener noreferrer">Privacy Policy</Link>
+                    {' '}and{' '}
+                    <Link href="/policies/#cancellation" className="policy-link" target="_blank" rel="noopener noreferrer">Cancellation Policy</Link>.
+                  </span>
+                </div>
+              </div>
+              <p className="err" id="e-you" hidden={!errors.consent && !errors.name && !errors.email}>
+                Please fill in your name, valid email, and confirm the acknowledgment box above.
+              </p>
             </fieldset>
 
-            <div className="send">
-              <button className="btn" type="submit" disabled={submitting}>
-                {submitting ? 'Sending…' : <>Send booking request <span className="arr" aria-hidden="true">→</span></>}
+            <div className="send-action-bar">
+              <button className="btn btn-booking-submit" type="submit" disabled={submitting}>
+                <span>{submitting ? 'Sending request…' : 'Send booking request'}</span>
+                <span className="arr" aria-hidden="true">→</span>
               </button>
-              <p className="small soft">We reply within 24 hours. Your details are kept confidential.</p>
+              <div className="send-assurance">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                <span>We reply within 24 hours. Your information is held strictly confidential.</span>
+              </div>
             </div>
           </form>
 
