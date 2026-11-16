@@ -418,6 +418,8 @@
 
   .menu { display: none; background: rgba(42,33,30,.08); border: 0; color: var(--espresso); font: 600 .875rem 'Nunito Sans', system-ui, sans-serif; cursor: pointer; padding: 10px 16px; border-radius: 999px; display: inline-flex; align-items: center; gap: 7px; }
   .nav .m-only { display: none; }
+  .nav-arr { display: none; }
+  .mobile-nav-footer { display: none; }
   /* Mobile header actions (menu + book btn) — hidden on desktop by default */
   .header-actions { display: none; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
   /* header-book-btn is inside header-actions; both hidden until ≤1020px */
@@ -432,36 +434,48 @@
        — but our Header.tsx only has .btn inside .header-actions now, so this is a safety rule */
     .header .wrap > .btn { display: none; }
 
-    /* Full-screen overlay nav */
+    /* Mobile nav overlay sits below the header bar so it never collides with the logo */
     .nav {
       display: none;
       position: fixed;
-      inset: 0;
+      top: var(--mobile-nav-top, 122px);
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: var(--bg, #f4eee4);
       z-index: 150;
-      overflow-y: auto;
+      overflow: hidden;
       overflow-x: hidden;
-      padding-top: 72px; /* space for header bar */
+      padding-top: 0;
+      align-items: stretch;
       flex-direction: column;
     }
     .nav.open { display: flex; }
 
-    /* Inner scroll container */
+    /* Inner scroll container: list flush under header, pinned footer at bottom */
     .mobile-nav-inner {
       display: flex;
       flex-direction: column;
       flex: 1;
-      min-height: 100%;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
     }
 
     /* Nav items list */
-    .nav-list {
+    .nav .nav-list {
+      display: block;
+      width: 100%;
       list-style: none;
       margin: 0;
       padding: 0;
-      border-top: 1px solid var(--line);
+      border-top: none;
+      flex: 1;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      min-height: 0;
     }
-    .nav-list li { border-bottom: 1px solid var(--line); }
+    .nav .nav-list li { display: block; border-bottom: 1px solid var(--line); }
     .nav-list a {
       display: flex;
       align-items: center;
@@ -480,7 +494,7 @@
       background: rgba(42,33,30,.05);
       color: var(--espresso);
     }
-    .nav-arr { opacity: 0.35; flex-shrink: 0; }
+    .nav-arr { display: block; opacity: 0.35; flex-shrink: 0; }
 
     /* Mobile-only items */
     .nav .m-only { display: block; }
@@ -489,35 +503,73 @@
     /* Footer within nav overlay (book btn + contact links) */
     .mobile-nav-footer {
       margin-top: auto;
-      padding: clamp(20px, 5vw, 32px) clamp(20px, 5vw, 32px) clamp(28px, 5vw, 40px);
+      padding: clamp(18px, 5vw, 30px) clamp(20px, 5vw, 32px) clamp(26px, 5vw, 36px);
       border-top: 1px solid var(--line);
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
-    .mobile-book-btn {
+    .mobile-nav-footer .mobile-book-btn {
       width: 100%;
       justify-content: center;
       text-align: center;
       display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+    }
+    .mobile-nav-footer .mobile-book-btn:hover {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: var(--paper);
     }
     .mobile-nav-contacts {
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px 20px;
+      flex-direction: column;
+      gap: 10px;
     }
     .mobile-contact-link {
       font-size: 0.875rem;
-      color: var(--muted, #8c7b72);
-      display: inline-flex;
+      color: var(--ink);
+      font-weight: 500;
+      display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       text-decoration: none;
     }
     .mobile-contact-link:hover { color: var(--espresso); }
 
-    /* Keep header above nav overlay */
+    /* Keep header bar visible above the fixed nav overlay.
+       The nav is a child of .header, which creates a stacking context.
+       Give .header-wrap (which contains brand + buttons) a higher local z-index
+       than the nav so the logo and menu button always paint on top. */
     .header { z-index: 160; }
+    .header-wrap {
+      position: relative;
+      z-index: 10;        /* above nav (z-index: 1 within header context) */
+      background: inherit; /* inherit the blurred background */
+    }
+    /* Nav sits below header-wrap within header's stacking context */
+    .nav { z-index: 1; }
+
+    /* backdrop-filter creates a containing block for position:fixed,
+       which traps the nav inside the header. Remove it on mobile. */
+    .header {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: var(--bg);
+    }
+    /* Keep the header bar above the fixed nav overlay */
+    .header .brand,
+    .header .header-actions { position: relative; z-index: 20; }
+    .header-book-btn { display: none; }
   }
 
   /* Floating WhatsApp action */
@@ -1294,7 +1346,7 @@
 
 /* Journey */
 #journey {
-  height: 420vh;
+  height: 240vh;
   padding: 0;
   background: linear-gradient(var(--bg), var(--bg2));
 }
@@ -1679,16 +1731,17 @@
 
 /* Responsive */
 @media (max-width: 900px) {
-  .hero .hg { grid-template-columns: 1fr; }
-  .hero .stage { margin: 20px auto 0; max-width: 400px; }
+  .hero { min-height: auto; padding: 44px 0 60px; }
+  .hero .hg { grid-template-columns: 1fr; gap: 26px; }
+  .hero .stage { margin: 0 auto; max-width: 340px; }
   .hero-facts { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 680px) {
-  /* Prevent the chip card from poking outside the viewport */
-  .chip { left: 0; }
-  /* Prevent hero stage from causing horizontal scroll */
-  .hero { overflow: hidden; }
-  .hero .stage { max-width: 100%; }
+  /* Compact hero: less top padding and a smaller illustration */
+  .hero { min-height: auto; padding: 28px 0 48px; overflow: hidden; }
+  .hero .stage { display: block; max-width: 260px; margin: 0 auto; }
+  .chip { left: 0; padding: 10px 14px; font-size: .75rem; }
+  .chip b { font-size: 1rem; }
   /* Global horizontal overflow guard */
   html, body { max-width: 100vw; overflow-x: hidden; }
   /* Topbar: keep single-line on very small screens */
@@ -1697,17 +1750,42 @@
   .topbar-pill { padding: 3px 10px; }
 }
 @media (max-width: 860px) {
-  .jg { grid-template-columns: 1fr; gap: 0; }
-  .jscene { height: 40vh; }
+  #journey { height: 100vh; height: 100svh; }
+  .jg { grid-template-columns: 1fr; gap: 14px; }
+  #journey .jst { touch-action: pan-x pinch-zoom; }
+  .jst { position: relative; top: auto; height: 100vh; height: 100svh; min-height: 0; padding: 78px 24px 24px; overflow: hidden; }
+  .jscene { height: 34vh; min-height: 190px; }
   .iso { transform: rotateX(58deg) rotateZ(-40deg) scale(.62); }
-  #jtx { min-height: 11em; }
-  #jtx h2 { font-size: 1.9rem; }
-  .jst { padding-top: 80px; }
+  #jtx { min-height: 9em; }
+  #jtx h2 { font-size: 1.8rem; }
   .scale small { display: none; }
+}
+/* Journey animation: longer scroll so stages linger like desktop */
+@media (max-width: 600px) {
+  .jscene { height: 28vh; min-height: 170px; }
+  .iso { transform: rotateX(58deg) rotateZ(-40deg) scale(.5); }
+  .jst { align-items: center; padding: 78px 18px 18px; height: 100vh; height: 100svh; min-height: 0; overflow: hidden; }
+  .jg { gap: 10px; }
+  #jtx { min-height: 7.5em; }
+  #jtx h2 { font-size: 1.45rem; }
+  #jtx p { font-size: .9rem; }
+  .jtabs { gap: 8px; margin-top: 16px; }
+  .jtabs button { font-size: .72rem; padding: 6px 10px; }
+  .jbar { margin-top: 16px; }
+}
+@media (max-width: 600px) and (max-height: 700px) {
+  .jst { padding-top: 32px; padding-bottom: 64px; }
+  .jg { gap: 6px; }
+  #jtx { min-height: 0; }
+  .jtabs { gap: 6px; margin-top: 10px; }
+  .jtabs button { padding: 4px 8px; }
+  .jbar { margin-top: 12px; }
+  .jscene { height: 22vh; min-height: 120px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .rv { opacity: 1 !important; transform: none !important; }
   .pin { transition: none; }
+  .blk .t, .blk .f, .blk .r { transition: none; }
   .sc { transition: none; }
 }
 
@@ -2082,3 +2160,35 @@ form.form,
 .footer a.btn { color: var(--ink); }
 .footer a.btn:hover { color: var(--ink); text-decoration: none; }
 
+
+/* Mobile CTA band: stack the copy and buttons so text never wraps one word per line */
+@media (max-width: 760px) {
+  .band {
+    grid-template-columns: 1fr;
+    padding: 28px 22px;
+    gap: 20px;
+  }
+  .band .acts {
+    justify-content: flex-start;
+  }
+  .band h2 {
+    font-size: clamp(1.45rem, 6vw, 1.9rem);
+  }
+  .band p {
+    font-size: .95rem;
+    max-width: none;
+  }
+  .band .acts .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+/* Mobile header: keep the menu overlay fixed to the viewport, not the header */
+@media (max-width: 1020px) {
+  .header {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--bg);
+  }
+}
