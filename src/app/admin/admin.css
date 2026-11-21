@@ -680,3 +680,10 @@ a.admin-card:hover {
 .booking-email-status button:disabled { opacity: .55; cursor: not-allowed; }
 .booking-meta small { display: block; margin-top: 5px; font-size: .76rem; color: var(--mut); }
 @media (max-width: 600px) { .admin-content .booking-tools { gap: 8px; } }
+
+@media (max-width: 900px) {
+  .admin-shell .field :where(input, select, textarea),
+  .admin-shell .booking-field :where(input, select, textarea),
+  .admin-root .admin-login-card .field input { font-size: 1rem; }
+  .admin-shell .booking-email-status button { min-height: 44px; padding-block: 10px; }
+}

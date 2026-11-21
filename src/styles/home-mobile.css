@@ -1,0 +1,44 @@
+/* Let home content shrink within its columns without changing desktop styling. */
+#services .pie-layout-grid > *,
+#services .home-service-tabs > button,
+#services .home-service-offering > *,
+#contact #f,
+#contact #f > *,
+#contact .home-contact-fields > * {
+  min-width: 0;
+}
+#contact #f :where(input, select, textarea) { min-width: 0; max-width: 100%; }
+
+@media (max-width: 920px) {
+  #services .pie-layout-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  #services .home-service-wheel { width: min(280px, 100%) !important; height: auto !important; aspect-ratio: 1; }
+}
+
+@media (max-width: 600px) {
+  /* Sections already have outside gutters; avoid another full set inside. */
+  #services > .wrap,
+  #contact > .wrap { padding-inline: 0; }
+  #services .home-service-selector,
+  #services .home-service-detail { padding: 20px !important; }
+  #services .home-service-tabs { gap: 8px !important; }
+  #services .home-service-tabs > button { padding: 10px !important; }
+  #services .home-service-tabs > button > span:last-child { white-space: normal !important; overflow: visible !important; line-height: 1.4; }
+  #services .home-service-offering {
+    grid-template-columns: minmax(0, 1fr) !important;
+    padding: 16px !important;
+    gap: 14px !important;
+  }
+  #services .home-service-offering-action {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px !important;
+    text-align: left !important;
+  }
+  #services .home-service-offering-action > span { white-space: normal !important; }
+  #services .home-service-offering-action > .btn { min-height: 44px; }
+  #contact .home-contact-card { padding: 24px 20px !important; }
+  #contact .home-contact-slot-label { flex-wrap: wrap; gap: 6px 14px; }
+  #contact #f :where(input, select, textarea) { font-size: 16px !important; }
+}

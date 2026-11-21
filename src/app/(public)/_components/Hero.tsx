@@ -18,7 +18,7 @@ export function Hero({ settings }: { settings: SiteSettings }) {
   const { showToast } = useToast();
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     const sc = scRef.current;
     const stage = stageRef.current;
     if (!sc || !stage) return;

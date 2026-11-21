@@ -131,6 +131,7 @@ export function BlogAudioPlayer({ title, readTime, textToRead }: BlogAudioPlayer
         <button
           type="button"
           onClick={cycleSpeed}
+          className="audio-speed"
           title="Change playback speed"
           style={{
             background: 'var(--bg)',
@@ -146,6 +147,11 @@ export function BlogAudioPlayer({ title, readTime, textToRead }: BlogAudioPlayer
           {rate}x speed
         </button>
       </div>
+      <style jsx>{`
+        @media (max-width: 1020px) {
+          .audio-speed { min-height: 44px; min-width: 44px; }
+        }
+      `}</style>
     </div>
   );
 }

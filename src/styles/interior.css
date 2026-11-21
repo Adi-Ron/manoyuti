@@ -130,6 +130,7 @@
 .interior-pages .ticks li { line-height: 1.65; }
 .interior-pages .hint, .interior-pages .disclaimer { font-size: .82rem; line-height: 1.6; }
 .interior-pages .date-quick button { min-height: 44px; }
+.interior-pages .field .date-input-wrap input { padding-left: 42px; }
 .interior-pages .consent-card { background: var(--bg); border-color: var(--line); }
 .interior-pages .send-action-bar { background: none; padding: 0; box-shadow: none; border: 0; }
 .interior-pages .send-assurance { font-size: .8rem; color: var(--mut); }

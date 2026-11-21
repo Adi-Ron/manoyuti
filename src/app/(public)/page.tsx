@@ -4,6 +4,7 @@ import { Hero } from './_components/Hero';
 import { Journey } from './_components/Journey';
 import { Services } from './_components/Services';
 import { Contact } from './_components/Contact';
+import '@/styles/home-mobile.css';
 
 export default async function HomePage() {
   const settings = await getSiteSettings();

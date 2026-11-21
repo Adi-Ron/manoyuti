@@ -273,6 +273,7 @@ export function Services() {
         >
           {/* Left Column: Interactive Wheel & Quadrant Selector */}
           <div
+            className="home-service-selector"
             style={{
               background: 'var(--paper)',
               border: '1px solid var(--line)',
@@ -286,7 +287,7 @@ export function Services() {
             }}
           >
             {/* SVG Pie Chart */}
-            <div style={{ position: 'relative', width: 280, height: 280, margin: '8px auto 20px' }}>
+            <div className="home-service-wheel" style={{ position: 'relative', width: 280, height: 280, margin: '8px auto 20px' }}>
               <svg viewBox="0 0 300 300" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
                 {/* 4 Quadrants: 0-90, 90-180, 180-270, 270-360 */}
                 {renderSlice(0, 90, 0)}
@@ -326,7 +327,7 @@ export function Services() {
             </p>
 
             {/* Segment Selector Buttons */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, width: '100%' }}>
+            <div className="home-service-tabs" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 10, width: '100%' }}>
               {PILLARS.map((p, i) => {
                 const isSelected = activeIdx === i;
                 return (
@@ -353,7 +354,7 @@ export function Services() {
                     <span style={{ fontSize: '.72rem', opacity: isSelected ? 0.9 : 0.65 }}>
                       0{i + 1} · Pillar
                     </span>
-                    <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <span style={{ width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {p.title}
                     </span>
                   </button>
@@ -364,6 +365,7 @@ export function Services() {
 
           {/* Right Column: Active Pillar Details & Items */}
           <div
+            className="home-service-detail"
             style={{
               background: 'var(--paper)',
               border: `1.5px solid ${activePillar.borderColor}`,
@@ -426,6 +428,7 @@ export function Services() {
               {activePillar.items.map((item) => (
                 <div
                   key={item.name}
+                  className="home-service-offering"
                   style={{
                     background: 'var(--bg)',
                     border: '1px solid var(--line)',
@@ -463,7 +466,7 @@ export function Services() {
                     </p>
                   </div>
 
-                  <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+                  <div className="home-service-offering-action" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
                     <span style={{ fontSize: '.82rem', fontWeight: 600, color: 'var(--espresso)', whiteSpace: 'nowrap' }}>
                       {item.meta}
                     </span>

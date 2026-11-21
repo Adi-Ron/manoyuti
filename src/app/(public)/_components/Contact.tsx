@@ -68,7 +68,7 @@ export function Contact() {
     <section id="contact" className="section" style={{ background: 'var(--bg2)', padding: 'clamp(52px, 7vw, 84px) 5vw' }}>
       <div className="wrap" style={{ maxWidth: 840, margin: '0 auto' }}>
         <div
-          className="card rv"
+          className="card rv home-contact-card"
           style={{
             padding: 'clamp(30px, 4.5vw, 48px)',
             borderRadius: 18,
@@ -87,7 +87,7 @@ export function Contact() {
           </div>
 
           <form id="f" onSubmit={handleSubmit} style={{ display: 'grid', gap: 18 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+            <div className="home-contact-fields" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: 16 }}>
               <div>
                 <label htmlFor="n" style={{ fontSize: '.85rem', fontWeight: 600, color: 'var(--espresso)', display: 'block', marginBottom: 6 }}>
                   Your name *
@@ -136,7 +136,7 @@ export function Contact() {
 
             {/* Time Slot Selection with Custom option */}
             <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <div className="home-contact-slot-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                 <label htmlFor="t" style={{ fontSize: '.85rem', fontWeight: 600, color: 'var(--espresso)', margin: 0 }}>
                   Preferred time window
                 </label>
