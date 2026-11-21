@@ -38,6 +38,7 @@ function mountJourney(width = 390) {
   loaded.require=name=>name==='react'?react:realRequire(name);
   loaded._compile(ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2020}}).outputText,filename);
   const blocks = Array.from({length:4},()=>({style:{setProperty(){}},classList:{toggle(){}}}));
+  const pin = {style:{},textContent:''};
   const scene = {offsetHeight:height,getBoundingClientRect:()=>({top:top-win.scrollY,bottom:top+height-win.scrollY,height})};
   const nodes = [];
   function walk(node){
@@ -46,7 +47,7 @@ function mountJourney(width = 390) {
     nodes.push(node);
     const props=node.props||{};
     if(node.ref){
-      node.ref.current=props.id==='journey'?scene:props.className==='jst'?{clientHeight:viewport}:props.className==='iso'?{querySelectorAll:()=>blocks}:{style:{},textContent:''};
+      node.ref.current=props.id==='journey'?scene:props.className==='jst'?{clientHeight:viewport}:props.className==='iso'?{querySelectorAll:()=>blocks}:props.className==='pin'?pin:{style:{},textContent:''};
     }
     walk(props.children);
   }
@@ -54,7 +55,7 @@ function mountJourney(width = 390) {
   const cleanups=effects.map(fn=>fn());
   const flush=()=>{for(const [id,fn] of [...frames]){frames.delete(id);fn();}};
   const scroll=progress=>{win.scrollY=top+progress*(height-viewport);listeners.get('scroll')?.();flush();};
-  return {win,listeners,scroll,flush,changes,nodes,top,height,viewport,
+  return {win,listeners,scroll,flush,changes,nodes,top,height,viewport,pin,
     close(){cleanups.forEach(fn=>fn?.());for(const [name,value]of Object.entries(previous)){if(value===undefined)delete global[name];else global[name]=value;}}
   };
 }
@@ -94,4 +95,17 @@ test('step buttons keep the selected stage synchronized with page scroll on mobi
 test('desktop journey continues to follow native scrolling',()=>{
   const app=mountJourney(1440);
   try{app.scroll(.6);assert.equal(app.changes.at(-1),2);}finally{app.close();}
+});
+
+test('the mobile marker climbs rather than dropping when it reaches the next step',()=>{
+  const app=mountJourney();
+  try{
+    let previousHeight=0;
+    for(const progress of [.24,.25,.26,.49,.5,.51,.74,.75,.76,1]){
+      app.scroll(progress);
+      const height=Number(app.pin.style.transform.match(/, ([0-9.]+)px\) rotateZ/)[1]);
+      assert.ok(height>=previousHeight,`marker dropped at ${progress*100}% scroll`);
+      previousHeight=height;
+    }
+  }finally{app.close();}
 });

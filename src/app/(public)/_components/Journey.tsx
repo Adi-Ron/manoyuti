@@ -29,10 +29,15 @@ export function Journey({ steps }: JourneyProps) {
 
   const paintProgress = useCallback((progress: number, current: number) => {
     let activeHeight = 8;
+    const mobile = window.innerWidth <= 1020;
     const blocks = isoRef.current?.querySelectorAll<HTMLElement>('.blk');
     blocks?.forEach((block, i) => {
       const local = Math.max(0, Math.min(1, progress * steps.length - i));
-      const height = 8 + local * ((HF[i] ?? HF[HF.length - 1]) - 8);
+      const target = HF[i] ?? HF[HF.length - 1];
+      // Start the next mobile platform at the previous step's height so the
+      // marker never drops back to ground level at a stage boundary.
+      const base = mobile && i > 0 && i <= current ? (HF[i - 1] ?? HF[HF.length - 1]) : 8;
+      const height = base + local * (target - base);
       if (i === current) activeHeight = height;
       block.style.setProperty('--h', height.toFixed(1));
       block.classList.toggle('cur', i === current);
