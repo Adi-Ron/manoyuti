@@ -1,65 +1,82 @@
-import Link from 'next/link';
+import { ProgrammeDetail } from '../_components/ProgrammeDetail';
 
 const PROGRAMME = {
   id: 'therapy-skills-certificate',
   name: 'Therapy Skills Certificate',
-  desc: 'Practical CBT, ACT and SFBT skills through role-plays, case discussions and supervision.',
+  desc: 'Practical mastery of CBT, ACT, and Solution-Focused Brief Therapy (SFBT) through evidence-based role-plays, real case discussions, and close clinical supervision.',
   for: 'MA students and early-career practitioners',
   format: 'Live online, small batch',
   learn: [
-    'Core CBT, ACT and SFBT techniques',
-    'Role-plays with feedback',
-    'Case discussions',
-    'Supervision of your practice'
+    'Core CBT techniques: thought records, behavioral experiments, and Socratic questioning',
+    'ACT processes: defusion, committed action, and values clarification',
+    'SFBT: miracle questions, scaling conversations, and exception-finding',
+    'Live supervised role-plays with structured peer and faculty feedback'
   ]
 };
 
+const CONTENT = {
+  "category": "Clinical Skills",
+  "action": "Register interest",
+  "facts": [
+    {
+      "label": "Eligible Cohort",
+      "value": PROGRAMME.for
+    },
+    {
+      "label": "Format",
+      "value": PROGRAMME.format
+    },
+    {
+      "label": "Modalities",
+      "value": "CBT · ACT · SFBT"
+    }
+  ],
+  "curriculumLabel": "Curriculum Core",
+  "curriculumTitle": "Techniques you will practice",
+  "curriculumNote": "Each module alternates between conceptual grounding, demonstration recordings, and supervised live role-play with structured written feedback.",
+  "registrationLabel": "Upcoming Cohort",
+  "registrationTitle": "Cohort Registration",
+  "registrationFacts": [
+    {
+      "label": "Start Date",
+      "value": "Upcoming Cohort (Announced soon)"
+    },
+    {
+      "label": "Duration",
+      "value": "6-week intensive programme"
+    },
+    {
+      "label": "Supervision",
+      "value": "Weekly 1-on-1 feedback"
+    },
+    {
+      "label": "Certificate",
+      "value": "Therapy Skills Certificate"
+    }
+  ],
+  "registrationAction": "Register your interest",
+  "registrationNote": "We will email you the syllabus and exact dates as soon as registrations open.",
+  "benefits": [
+    {
+      "title": "Supervision by Active Clinicians",
+      "description": "Feedback from psychologists who practice these exact modalities with real clients."
+    },
+    {
+      "title": "Safe Practice Environment",
+      "description": "Role-play in a psychologically safe space before you meet real clients."
+    },
+    {
+      "title": "Multiple Modalities",
+      "description": "CBT, ACT, and SFBT in one programme—flexibility to match diverse client needs."
+    },
+    {
+      "title": "Ethical & Cultural Grounding",
+      "description": "Every technique is taught within RCI ethical guidelines and Indian cultural context."
+    }
+  ],
+  "benefitsTitle": "Why practice therapy skills with us"
+};
+
 export default function TherapySkillsPage() {
-  return (
-    <>
-      <section className="pagehead blush" aria-labelledby="pg-h">
-        <div className="wrap">
-          <div className="txt">
-            <Link className="back" href="/training/" style={{ '--i': 0 }}>← All programmes</Link>
-            <h1 id="pg-h" style={{ '--i': 1 }}>{PROGRAMME.name}</h1>
-            <p className="lead" style={{ '--i': 2 }}>{PROGRAMME.desc}</p>
-            <div className="acts" style={{ '--i': 3 }}><Link className="btn" href={`/contact/?interest=Academy&about=${encodeURIComponent(PROGRAMME.name)}`}>Register interest <span className="arr" aria-hidden="true">→</span></Link></div>
-          </div>
-          <dl className="facts"><div><dt>For</dt><dd>{PROGRAMME.for}</dd></div><div><dt>Format</dt><dd>{PROGRAMME.format}</dd></div></dl>
-        </div>
-      </section>
-
-      <section className="sec" aria-labelledby="learn-h">
-        <div className="wrap split">
-          <div className="rv" style={{ display: 'grid', gap: 20, alignContent: 'start' }}>
-            <h2 id="learn-h">What you'll learn</h2>
-            <ul className="ticks lead">{PROGRAMME.learn.map((item, i) => <li key={i}>{item}</li>)}</ul>
-          </div>
-          <div className="sum-box green rv" style={{ '--i': 1 }}>
-            <h2>Next batch: coming soon</h2>
-            <dl className="sum">
-              <div><dt>Starts</dt><dd>Dates coming soon</dd></div>
-              <div><dt>Duration</dt><dd>To be announced</dd></div>
-              <div><dt>Fee</dt><dd>To be announced</dd></div>
-              <div><dt>Format</dt><dd>Live online</dd></div>
-            </dl>
-            <p><Link className="btn light" href={`/contact/?interest=Academy&about=${encodeURIComponent(PROGRAMME.name)}`}>Register interest <span className="arr" aria-hidden="true">→</span></Link></p>
-            <p className="small">Register your interest and we'll tell you as soon as dates and fees are confirmed.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="sec tint-sage" aria-labelledby="why-h">
-        <div className="wrap">
-          <div className="head center"><h2 id="why-h" className="rv">Why learn with us</h2></div>
-          <div className="cards">
-            <article className="card rv"><span className="ic"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/></svg></span><h3>Learn from a practitioner</h3><p>Taught by a psychologist who has trained more than 20 interns and supervised over 15 research projects.</p></article>
-            <article className="card rv" style={{ '--i': 1 }}><span className="ic blush"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20v-1a4.5 4.5 0 0 1 4.5-4.5h4a4.5 4.5 0 0 1 4.5 4.5v1"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M21.5 20v-1a4.5 4.5 0 0 0-3-4.2"/></svg></span><h3>Small batches</h3><p>So every learner gets personal feedback.</p></article>
-            <article className="card rv" style={{ '--i': 2 }}><span className="ic sky"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg></span><h3>Live online</h3><p>Join from anywhere in India.</p></article>
-            <article className="card rv" style={{ '--i': 3 }}><span className="ic sand"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span><h3>Certificate</h3><p>A certificate of completion.</p></article>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+  return <ProgrammeDetail programme={PROGRAMME} content={CONTENT} />;
 }

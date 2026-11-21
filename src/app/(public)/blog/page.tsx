@@ -3,56 +3,106 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-const POSTS = [
-  { slug: 'what-actually-happens-in-cbt', category: 'Therapy Explained', readTime: '6 min read', title: 'What actually happens in CBT?', desc: 'A walk through the first, middle and final sessions of cognitive behavioural therapy, and what the research says about it.' },
-  { slug: 'exam-stress-and-sleep', category: 'Student Wellbeing', readTime: 'coming soon', title: 'Exam stress and sleep', desc: 'Practical, evidence-based ways to protect sleep during exam season.', soon: true },
-  { slug: 'ocd-is-more-than-being-tidy', category: 'Understanding Conditions', readTime: 'coming soon', title: 'OCD is more than being tidy', desc: 'What obsessions and compulsions really look like, and why the everyday use of \'OCD\' gets it wrong.', soon: true },
-  { slug: 'pcos-and-mood', category: "Women's Mental Health", readTime: 'coming soon', title: 'PCOS and mood: what the research says', desc: 'How PCOS can affect anxiety, low mood and body image, and what kinds of support help.', soon: true },
-  { slug: 'why-same-argument', category: 'Relationships', readTime: 'coming soon', title: 'Why the same argument keeps coming back', desc: 'Recurring conflict in couples often isn\'t about the topic. A look at the patterns underneath.', soon: true },
-  { slug: 'writing-case-history', category: 'For Psychology Students', readTime: 'coming soon', title: 'Writing a case history that helps', desc: 'A practical guide for interns on structuring a case history your supervisor will thank you for.', soon: true },
+interface BlogPostMeta {
+  slug: string;
+  category: string;
+  readTime: string;
+  published: string;
+  title: string;
+  desc: string;
+}
+
+const POSTS: BlogPostMeta[] = [
+  {
+    slug: 'what-actually-happens-in-cbt',
+    category: 'Therapy Explained',
+    readTime: '6 min read',
+    published: 'Updated Nov 2026',
+    title: 'What happens in CBT?',
+    desc: 'A gentle guide to cognitive behavioural therapy, from your first conversation to the skills you practise between sessions.'
+  },
+  {
+    slug: 'exam-stress-and-sleep',
+    category: 'Student Wellbeing',
+    readTime: '5 min read',
+    published: 'Nov 2026',
+    title: 'When exam stress affects your sleep',
+    desc: 'Understand the connection between academic pressure and sleep, with practical habits to support you through exam season.'
+  },
+  {
+    slug: 'ocd-is-more-than-being-tidy',
+    category: 'Understanding Conditions',
+    readTime: '7 min read',
+    published: 'Nov 2026',
+    title: 'OCD is more than being tidy',
+    desc: 'Making sense of obsessions and compulsions, and how exposure and response prevention can support recovery.'
+  },
+  {
+    slug: 'pcos-and-mood',
+    category: "Women's Mental Health",
+    readTime: '6 min read',
+    published: 'Nov 2026',
+    title: 'PCOS, hormones and your mood',
+    desc: 'Explore how PCOS and emotional wellbeing can affect each other, and where psychological support may help.'
+  },
+  {
+    slug: 'why-same-argument',
+    category: 'Relationships',
+    readTime: '5 min read',
+    published: 'Nov 2026',
+    title: 'Why does the same argument keep coming back?',
+    desc: 'Look beneath familiar disagreements to understand the needs, fears and patterns that can keep couples feeling stuck.'
+  },
+  {
+    slug: 'writing-case-history',
+    category: 'For Psychology Students',
+    readTime: '8 min read',
+    published: 'Nov 2026',
+    title: 'Writing a thoughtful clinical case history',
+    desc: 'A practical starting point for psychology students learning to organise intake notes, case formulations and ethical documentation.'
+  }
 ];
 
-const CATEGORIES = ['All', 'For Psychology Students', 'Relationships', 'Student Wellbeing', 'Therapy Explained', 'Understanding Conditions', "Women's Mental Health"];
+const CATEGORIES = ['All', 'Therapy Explained', 'Student Wellbeing', 'Understanding Conditions', "Women's Mental Health", 'Relationships', 'For Psychology Students'];
 
 export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState('All');
-
-  const filtered = activeCategory === 'All' ? POSTS : POSTS.filter(p => p.category === activeCategory);
+  const filtered = activeCategory === 'All' ? POSTS : POSTS.filter(post => post.category === activeCategory);
 
   return (
     <>
-      <section className="pagehead sand" aria-labelledby="bl-h">
-        <div className="wrap">
-          <div className="txt">
-            <span className="label" style={{ '--i': 0 }}><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 0 2 2h14"/><path d="M8 7h8M8 11h6"/></svg> The Resilio blog</span>
-            <h1 id="bl-h" style={{ '--i': 1 }}>Research you can read</h1>
-            <p className="lead" style={{ '--i': 2 }}>Clear, research-backed articles on mental health, therapy and psychology.</p>
+      <section className="care-hero" aria-labelledby="journal-title">
+        <div className="wrap care-hero-grid">
+          <div className="care-intro">
+            <span className="care-kicker">The Manoyuti journal</span>
+            <h1 id="journal-title">A little understanding can go a long way.</h1>
+            <p className="care-lead">Thoughtful reads on mental health, relationships and everyday wellbeing, grounded in psychological research.</p>
           </div>
-          <dl className="facts"><div><dt>Every article</dt><dd>lists its sources</dd></div></dl>
+          <div className="care-hero-note"><span className="care-kicker">At your own pace</span><p>Read quietly, listen to an article, or find a topic that meets you where you are.</p><span className="care-card-meta">5–8 minute reads · Audio narration available</span></div>
         </div>
       </section>
 
-      <section className="sec tight" aria-labelledby="list-h">
+      <section className="care-section" aria-label="Journal articles">
         <div className="wrap">
-          <h2 id="list-h" className="vh">Articles</h2>
-          <div className="filters" role="group" aria-label="Filter articles by topic" id="filters">
-            {CATEGORIES.map((cat, i) => (
-              <button key={cat} type="button" aria-pressed={activeCategory === cat} data-cat={cat} onClick={() => setActiveCategory(cat)}>{cat}</button>
+          <div className="care-filters" role="group" aria-label="Filter articles by category">
+            {CATEGORIES.map(category => (
+              <button key={category} type="button" aria-pressed={activeCategory === category} aria-controls="article-results" onClick={() => setActiveCategory(category)}>{category}</button>
             ))}
           </div>
-          <ol className="posts" id="postGrid">
-            {filtered.map((post, i) => (
-              <li key={post.slug} className={`post-row rv ${post.soon ? 'soon' : ''}`} data-cat={post.category} style={{ '--i': i }}>
-                <p className="cat">{post.category} · {post.readTime}</p>
-                <div className="txt">
-                  <h3><Link href={post.soon ? '#' : `/blog/${post.slug}/`}>{post.title}</Link></h3>
-                  <p>{post.desc}</p>
-                  {!post.soon && <p><Link className="link" href={`/blog/${post.slug}/`}>Read article <span className="arr" aria-hidden="true">→</span></Link></p>}
+          <p className="care-result-count" role="status" aria-live="polite">{filtered.length} {filtered.length === 1 ? 'article' : 'articles'}{activeCategory === 'All' ? ' to explore' : ` in ${activeCategory}`}</p>
+          <div id="article-results" className="care-grid care-grid-three">
+            {filtered.map(post => (
+              <article key={post.slug} className="care-card care-journal-card">
+                <span className="care-kicker">{post.category}</span>
+                <h2><Link href={`/blog/${post.slug}/`}>{post.title}</Link></h2>
+                <p>{post.desc}</p>
+                <div className="care-card-footer">
+                  <span className="care-card-meta">{post.readTime} · {post.published}</span>
+                  <Link href={`/blog/${post.slug}/`} className="care-link" aria-label={`Read ${post.title}`}>Read article <span aria-hidden="true">→</span></Link>
                 </div>
-              </li>
+              </article>
             ))}
-          </ol>
-          <p className="soft" id="noPosts" hidden>No articles on this topic yet.</p>
+          </div>
         </div>
       </section>
     </>

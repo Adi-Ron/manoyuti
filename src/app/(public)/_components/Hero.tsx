@@ -16,8 +16,6 @@ export function Hero({ settings }: { settings: SiteSettings }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const scRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToast();
-  const clientsCount = Number(settings.clients_count.replace(/[^\d]/g, '')) || 1000;
-  const researchCount = Number(settings.research_count.replace(/[^\d]/g, '')) || 15;
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -45,25 +43,6 @@ export function Hero({ settings }: { settings: SiteSettings }) {
     };
   }, []);
 
-  useEffect(() => {
-    const els = Array.from(document.querySelectorAll<HTMLElement>('.hero-facts .roll'));
-    const rafs: number[] = [];
-    els.forEach(el => {
-      const to = Number(el.dataset.to || 0);
-      const suffix = el.dataset.suffix || '';
-      const start = performance.now();
-      const dur = 1200;
-      const tick = (t: number) => {
-        const p = Math.min(1, (t - start) / dur);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(to * eased).toLocaleString('en-IN') + suffix;
-        if (p < 1) rafs.push(requestAnimationFrame(tick));
-      };
-      rafs.push(requestAnimationFrame(tick));
-    });
-    return () => rafs.forEach(cancelAnimationFrame);
-  }, []);
-
   const goContact = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -80,12 +59,6 @@ export function Hero({ settings }: { settings: SiteSettings }) {
             </p>
             <div className="acts" style={{ '--i': 3 }}>
               <Link className="btn" href="/booking/">Book a session <span className="arr" aria-hidden="true">→</span></Link>
-              <Link className="btn line" href={`https://wa.me/${settings.whatsapp_number}`} target="_blank" rel="noopener noreferrer">
-                <svg className="i" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M3 21l1.7-4A8.5 8.5 0 1 1 8 19.8z" />
-                  <path d="M9 10h.01M12.5 10h.01M16 10h.01" />
-                </svg> WhatsApp us
-              </Link>
             </div>
             <p className="trust" style={{ '--i': 4 }}>
               {TRUST_ITEMS.map((item, i) => (
@@ -131,26 +104,6 @@ export function Hero({ settings }: { settings: SiteSettings }) {
             </div>
           </div>
         </div>
-      </div>
-      <div className="wrap">
-        <dl className="hero-facts">
-          <div style={{ '--i': 0 }}>
-            <dt>Clients supported</dt>
-            <dd><span className="roll" data-to={clientsCount} data-suffix="+">{clientsCount.toLocaleString('en-IN')}+</span></dd>
-          </div>
-          <div style={{ '--i': 1 }}>
-            <dt>Individual session</dt>
-            <dd>{settings.session_fee}</dd>
-          </div>
-          <div style={{ '--i': 2 }}>
-            <dt>Research projects</dt>
-            <dd><span className="roll" data-to={researchCount} data-suffix="+">{researchCount}+</span></dd>
-          </div>
-          <div style={{ '--i': 3 }}>
-            <dt>{settings.hero_stat4_label || 'Session format'}</dt>
-            <dd className="now-dd" id="now">{settings.hero_stat4_value || 'Online & In-person'}</dd>
-          </div>
-        </dl>
       </div>
     </section>
   );

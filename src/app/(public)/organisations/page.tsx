@@ -1,72 +1,111 @@
-import Link from 'next/link';
-import { ORG_PROGRAMMES } from '@/lib/utils';
+'use client';
 
-const PAST_TALKS = [
-  'Bipolar disorder', 'Schizophrenia', 'PCOS and mental health',
-  'Mood and sleep disorders', 'Stress management', 'Coping skills', 'Healthy relationships'
+import Link from 'next/link';
+
+const ORG_SOLUTIONS = [
+  {
+    id: 'posh',
+    title: 'POSH & Internal Committee training',
+    tag: 'Statutory Compliance',
+    forWhom: 'Corporates, Startups, NGOs & Healthcare Institutions',
+    desc: 'End-to-end support for the Prevention of Sexual Harassment (POSH) Act, 2013. We train Internal Committees (IC) on lawful inquiry procedures, conduct workforce sensitization, and ensure documentation audit readiness.',
+    deliverables: [
+      'Interactive workforce awareness workshops',
+      'Specialized IC capacity building & case-handling protocols',
+      'Policy auditing, annual report advisory, and compliance certificates'
+    ]
+  },
+  {
+    id: 'pocso',
+    title: 'POCSO & campus safety',
+    tag: 'Campus & Child Safety',
+    forWhom: 'Schools, Colleges, Universities & Hostels',
+    desc: 'Sensitisation on the Protection of Children from Sexual Offences (POCSO) Act. We equip educators, administrative heads, and student counsellors with legally aligned, child-centric safeguarding protocols.',
+    deliverables: [
+      'Staff and teacher sensitization on red flags & reporting rules',
+      'Drafting institution-wide child protection policies',
+      'Safe student reporting channels & crisis escalation guidance'
+    ]
+  },
+  {
+    id: 'eap',
+    title: 'Employee wellbeing & burnout support',
+    tag: 'Workplace Resilience',
+    forWhom: 'Organizations seeking sustainable performance',
+    desc: 'Confidential psychological support for employees, with individual therapy, group sessions and practical guidance for a more supportive workplace.',
+    deliverables: [
+      'Confidential individual therapy sessions for team members',
+      'Managerial training on mental health first aid & empathy',
+      'Quarterly wellbeing climate audits & anonymized impact metrics'
+    ]
+  }
+];
+
+const PAST_WORKSHOP_TOPICS = [
+  'Preventing Workplace Burnout in High-Stress Environments',
+  'Emotional Intelligence for Team Leaders & Managers',
+  'PCOS, Hormonal Health & Workplace Ergonomics for Women',
+  'Managing Chronic Anxiety, Sleep Hygiene & Screen Fatigue',
+  'Navigating Difficult Conversations & Constructive Feedback',
+  'Building Empathetic Campus Cultures & Student Psychological Safety'
 ];
 
 export default function OrganisationsPage() {
   return (
     <>
-      <section className="pagehead sky" aria-labelledby="org-h">
-        <div className="wrap">
-          <div className="txt">
-            <span className="label" style={{ '--i': 0 }}>For organisations</span>
-            <h1 id="org-h" style={{ '--i': 1 }}>Wellbeing for workplaces and schools</h1>
-            <p className="lead" style={{ '--i': 2 }}>Evidence-based programmes that help organisations build safer, healthier and more supportive places to work and learn.</p>
-            <div className="acts" style={{ '--i': 3 }}><Link className="btn" href="/contact/?interest=Organisation%20programmes">Talk to us <span className="arr" aria-hidden="true">→</span></Link></div>
+      <section className="care-hero" aria-labelledby="organisations-title">
+        <div className="wrap care-hero-grid">
+          <div className="care-intro">
+            <span className="care-kicker">Workplaces, schools & campuses</span>
+            <h1 id="organisations-title">Support the people who make your organisation.</h1>
+            <p className="care-lead">Thoughtful psychological programmes that help teams and learning communities feel safer, better supported and more connected.</p>
+            <Link className="care-button" href="#solutions">Explore programmes <span aria-hidden="true">↓</span></Link>
           </div>
-          <dl className="facts"><div><dt>For</dt><dd>Workplaces, schools, colleges</dd></div><div><dt>Format</dt><dd>On site or online</dd></div></dl>
+          <dl className="care-facts">
+            <div><dt>Where we work</dt><dd>On-site in Bengaluru & online</dd></div>
+            <div><dt>Our focus</dt><dd>Wellbeing, safety & prevention</dd></div>
+            <div><dt>Built around you</dt><dd>Your people, goals & context</dd></div>
+          </dl>
         </div>
       </section>
 
-      <section className="sec" aria-labelledby="progs-h">
+      <section id="solutions" className="care-section" aria-labelledby="solutions-title">
         <div className="wrap">
-          <div className="head"><span className="label rv">Programmes</span><h2 id="progs-h" className="rv">What we offer organisations</h2><p className="rv">Three new programmes are on the way. Register your interest and we'll tell you as soon as they open.</p></div>
-          <div className="cards c3">
-            {ORG_PROGRAMMES.map((prog, i) => (
-              <article key={prog.id} className={`card t-${['blush','sand','sky'][i]} rv`} style={{ '--i': i }}>
-                <span className="soon-tag">Coming soon</span>
-                <span className="ic"><svg className="i" viewBox="0 0 24 24" aria-hidden="true">
-                  {prog.id === 'posh' && <><path d="M12 3l8 3v6c0 5-3.5 8.3-8 9-4.5-.7-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></>}
-                  {prog.id === 'pocso' && <><path d="M22 9 12 5 2 9l10 4 10-4z"/><path d="M6 11v5c3.5 2.5 8.5 2.5 12 0v-5"/><path d="M22 9v5"/></>}
-                  {prog.id === 'eap' && <><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20v-1a4.5 4.5 0 0 1 4.5-4.5h4a4.5 4.5 0 0 1 4.5 4.5v1"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M21.5 20v-1a4.5 4.5 0 0 0-3-4.2"/></>}
-                </svg></span>
-                <h3>{prog.name}</h3>
-                <p className="meta">{prog.for}</p>
-                <p>{prog.desc}</p>
-                <Link className="link" href={`/contact/?interest=Organisation%20programmes&about=${encodeURIComponent(prog.name)}`}>Register interest <span className="arr" aria-hidden="true">→</span></Link>
+          <div className="care-section-head">
+            <span className="care-kicker">Programmes for your community</span>
+            <h2 id="solutions-title">Care that fits your setting</h2>
+            <p>We shape each programme around your team, institutional needs and learning goals.</p>
+          </div>
+          <div className="care-grid care-grid-three">
+            {ORG_SOLUTIONS.map(solution => (
+              <article key={solution.id} className="care-card">
+                <span className="care-kicker">{solution.tag}</span>
+                <h3>{solution.title}</h3>
+                <span className="care-card-meta">{solution.forWhom}</span>
+                <p>{solution.desc}</p>
+                <ul className="care-list">{solution.deliverables.map(item => <li key={item}>{item}</li>)}</ul>
+                <div className="care-card-footer"><Link className="care-link" href={`/contact/?interest=Organisation%20programmes&about=${encodeURIComponent(solution.title)}`}>Discuss this programme <span aria-hidden="true">→</span></Link></div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="sec tint" aria-labelledby="workshops-h">
-        <div className="wrap">
-          <div className="head"><h2 id="workshops-h" className="rv">Workshops and talks</h2><p className="rv">Evidence-based workshops for schools, colleges, workplaces and community groups on mental health awareness, stress, emotional wellbeing and resilience, tailored to the audience, with feedback collected to measure their impact.</p></div>
-          <div className="split">
-            <div className="rv" style={{ display: 'grid', gap: 16, alignContent: 'start' }}>
-              <h3>Upcoming events</h3>
-              <div className="soon-box"><span className="ic sand"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></svg></span><div><p><b>New workshops and talks are coming soon.</b></p><p className="soft">Want to hear when they're announced, or host one for your school, college or team? Get in touch.</p><p><Link className="link" href="/contact/?interest=Events">Tell me about new events <span className="arr" aria-hidden="true">→</span></Link></p></div></div>
-            </div>
-            <div className="panelbox rv" style={{ '--i': 1 }}>
-              <h3>Past talks</h3>
-              <p className="soft">Isha has led public awareness workshops on:</p>
-              <ul className="chips">{PAST_TALKS.map((t, i) => <li key={i}>{t}</li>)}</ul>
-              <p><Link className="btn" href="/contact/?interest=Events">Plan a workshop <span className="arr" aria-hidden="true">→</span></Link></p>
-            </div>
+      <section className="care-section care-section-soft" aria-labelledby="workshops-title">
+        <div className="wrap care-split">
+          <div className="care-section-head">
+            <span className="care-kicker">Workshops & conversations</span>
+            <h2 id="workshops-title">Make room for wellbeing.</h2>
+            <p>Interactive sessions led by psychologist Isha Tiwari, from 90-minute webinars to half-day workshops and retreats.</p>
           </div>
+          <ul className="care-list">{PAST_WORKSHOP_TOPICS.map(topic => <li key={topic}>{topic}</li>)}</ul>
         </div>
       </section>
 
-      <section className="sec tight" aria-labelledby="org-close-h">
-        <div className="wrap">
-          <div className="band rv">
-            <div><h2 id="org-close-h">Planning for your team or school?</h2><p>Tell us about your organisation and what you need, and we'll shape a programme around it.</p></div>
-            <div className="acts"><Link className="btn light" href="/contact/?interest=Organisation%20programmes">Get in touch <span className="arr" aria-hidden="true">→</span></Link></div>
-          </div>
+      <section className="care-section" aria-labelledby="proposal-title">
+        <div className="wrap care-callout">
+          <div><span className="care-kicker">Let’s plan together</span><h2 id="proposal-title">What would help your community?</h2><p>Share your group size, goals and preferred dates. We will reply within 24 hours to discuss a suitable programme, schedule and pricing.</p></div>
+          <Link className="care-button" href="/contact/?interest=Organisation%20programmes">Tell us what you need <span aria-hidden="true">→</span></Link>
         </div>
       </section>
     </>

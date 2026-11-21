@@ -1,100 +1,60 @@
 import Link from 'next/link';
 
-const ISHA_STATS = [
-  { value: '1,000+', label: 'clients supported' },
-  { value: '15+', label: 'research projects' },
-  { value: '10+', label: 'courses taught' }
+const ISHA_CREDENTIALS = [
+  'Assistant Professor of Psychology, Amity University, Bengaluru',
+  'PhD Scholar in Psychology, Christ University, Bengaluru',
+  'Master of Arts in Clinical Psychology, Amity University, Noida',
+  'Clinical Training: SMS Psychiatric Hospital (Jaipur) & VINHANS (Delhi)',
+  'Co-founder & Advisor, Centre for Happiness, Amity University'
 ];
 
-const IRA_TAGS = [
-  "Women's health", "Intervention development", "Cognitive neuroscience",
-  "Health psychology", "Mental health policy"
+const IRA_FOCUS_AREAS = [
+  'Women’s Hormonal & Psychological Health (PCOS, Perinatal)',
+  'Translational Psychotherapy & Intervention Development',
+  'Cognitive Neuroscience & Autonomic Nervous System Regulation',
+  'Qualitative Research Methods & Thematic Analysis in NVivo',
+  'Ethical Mental Health Policy & Tech-Enabled Interventions'
 ];
 
-const VALUES = [
-  'Compassion', 'Integrity', 'Confidentiality', 'Curiosity', 'Continuous learning'
-];
-
-const TICKS = [
-  '<b>Evidence first.</b> Therapies with strong research support, including CBT, DBT, ACT, EMDR, SFBT and REBT.',
-  '<b>You, not a template.</b> Every plan is shaped around your needs, goals and pace.',
-  '<b>A safe, non-judgemental space.</b> What you share stays confidential, within ethical and legal limits.',
-  '<b>Growth beyond the session.</b> Practical tools you can use in everyday life.'
+const CORE_VALUES = [
+  {
+    num: '01',
+    title: 'Evidence with care',
+    desc: 'Our clinical work and teaching draw on psychological research and evidence-based approaches.'
+  },
+  {
+    num: '02',
+    title: 'Respect for your experience',
+    desc: 'You know your life best. We listen without judgement and make decisions together.'
+  },
+  {
+    num: '03',
+    title: 'Care for your privacy',
+    desc: 'We protect your information and explain how confidentiality works, including its limits.'
+  },
+  {
+    num: '04',
+    title: 'Clear, everyday language',
+    desc: 'We explain ideas and options simply, so you can make informed choices and ask questions freely.'
+  }
 ];
 
 export default function AboutPage() {
   return (
-    <>
-      <section className="pagehead" aria-labelledby="ab-h">
-        <div className="wrap">
-          <div className="txt">
-            <span className="label" style={{ '--i': 0 }}>About Resilio</span>
-            <h1 id="ab-h" style={{ '--i': 1 }}>Where psychology meets health</h1>
-            <p className="lead" style={{ '--i': 2 }}>We are building a space where psychology meets science, health and technology, to make understanding the human mind more accessible, meaningful and compassionate.</p>
-          </div>
-          <dl className="facts"><div><dt>Founded by</dt><dd>Isha & Ira Tiwari</dd></div><div><dt>Based in</dt><dd>Bengaluru</dd></div></dl>
-        </div>
-      </section>
+    <div className="care-page care-about">
+      <section className="pagehead care-hero" aria-labelledby="about-title"><div className="wrap"><div className="txt"><span className="care-kicker">About Manoyuti</span><h1 id="about-title">Good care begins with being heard.</h1><p className="lead">We bring psychology, research, and teaching together with a simple intention: to make thoughtful support feel more human and within reach.</p><div className="care-actions"><Link className="clean-btn-primary" href="/booking/">Find support <span aria-hidden="true">&rarr;</span></Link><a className="care-text-link" href="#founders">Meet Isha &amp; Ira</a></div></div><aside className="care-hero-note" aria-label="Our home"><span className="care-note-mark" aria-hidden="true">&#10035;</span><p>Rooted in Bengaluru.<br />Here for you, wherever you are in India.</p><span className="care-note-caption">Manoyuti</span></aside></div></section>
 
-      <section className="sec" aria-labelledby="vision1-h">
-        <div className="wrap split">
-          <h2 id="vision1-h" className="rv">The many dimensions of well-being</h2>
-          <div className="prose rv" style={{ '--i': 1 }}>
-            <p>Our vision is a multidisciplinary platform exploring the many dimensions of human well-being, from women's reproductive and emotional health to cognitive functioning, neuroscience, health psychology, victimology and the nuances of everyday psychological experience.</p>
-            <p>We believe that health is more than the absence of illness, psychology is more than the treatment of mental health concerns, and technology can be more than a tool. Brought together thoughtfully, these fields help us understand people better, challenge misconceptions, and bridge the gap between scientific knowledge and everyday life.</p>
-            <p>That is why Resilio has three parts: <Link href="/therapy/">therapy</Link>, <Link href="/research/">research</Link> and <Link href="/training/">training</Link>, with a <Link href="/blog/">blog</Link> that shares what we learn.</p>
-          </div>
-        </div>
-      </section>
+      <section className="care-section" aria-labelledby="story-title"><div className="wrap care-split"><header className="care-section-head"><span className="care-kicker">Our story</span><h2 id="story-title">Science gives us a foundation. Listening shows us the way.</h2></header><div className="care-story"><p>Manoyuti was founded by Isha and Ira Tiwari to connect psychological care with the research and teaching that help it grow.</p><p>We believe support should make room for your life as it is: your relationships, culture, questions, and pace. Our work brings clinical knowledge into that conversation with warmth and respect.</p><p>From a first therapy session to a research project or a clinical internship, we want people to feel informed, supported, and able to ask questions.</p></div></div></section>
 
-      <section className="sec tint" aria-labelledby="founders-h">
-        <div className="wrap">
-          <div className="head"><h2 id="founders-h" className="rv">The founders</h2></div>
-          <div className="team">
-            <article className="person rv">
-              <div className="top"><span className="avatar" aria-hidden="true">IT</span><div><h3>Isha Tiwari</h3><p className="role">Psychologist · Assistant Professor, Amity University, Bengaluru · PhD scholar, Christ University</p></div></div>
-              <p>Isha Tiwari is a psychologist and an Assistant Professor at Amity University, Bengaluru. She is pursuing her PhD in Psychology at Christ University, Bengaluru, and holds an MA in Clinical Psychology from Amity University, Noida.</p>
-              <p>Isha has supported more than 1,000 clients through individual and couples therapy, working with anxiety, trauma, OCD, mood disorders, relationship concerns and addiction. She trained at institutions including SMS Psychiatric Hospital, Jaipur, and VINHANS, Delhi, and has worked alongside psychiatrists on complex cases.</p>
-              <p>As an academic, she has taught more than 10 courses, supervised over 15 research projects, and helped set up the Centre for Happiness at Amity University. That blend of clinical practice and research is the foundation of Resilio.</p>
-              <div className="figs">{ISHA_STATS.map((s, i) => <div key={i}><b>{s.value}</b><span>{s.label}</span></div>)}</div>
-            </article>
-            <article className="person rv" style={{ '--i': 1 }}>
-              <div className="top"><span className="avatar blush" aria-hidden="true">IT</span><div><h3>Ira Tiwari</h3><p className="role">Psychology researcher · PhD scholar</p></div></div>
-              <p className="quote">Where psychology meets research, innovation and human well-being.</p>
-              <p>I am a psychology researcher and PhD scholar with a keen interest in bridging psychological science, therapeutic innovation and technology to address complex human experiences. My work is driven by a central belief: psychological care should be informed by evidence, grounded in human experience, and continuously improved through research and innovation.</p>
-              <p>My primary focus lies in research and development, psychotherapy and intervention development, with a growing emphasis on women's psychological health, emotional well-being, and accessible, evidence-informed support.</p>
-              <p>Beyond psychotherapy, my interests span artificial intelligence, cognitive neuroscience, health psychology, criminal psychology and mental health policy. Through this platform, I aim to translate research into meaningful ideas and make complex concepts accessible beyond academic spaces.</p>
-              <ul className="tags">{IRA_TAGS.map((t, i) => <li key={i}>{t}</li>)}</ul>
-              <p><Link className="link" href="/about/">Read both stories <span className="arr" aria-hidden="true">→</span></Link></p>
-            </article>
-          </div>
-        </div>
-      </section>
+      <section className="care-section care-section-tint" aria-labelledby="practice-title"><div className="wrap"><header className="care-section-head"><span className="care-kicker">One practice, connected work</span><h2 id="practice-title">Three ways we make room for growth</h2></header><div className="care-practice-grid"><article><span className="care-practice-symbol" aria-hidden="true">&#10035;</span><h3>Therapy &amp; care</h3><p>Private support for individuals and couples, online and in Bengaluru.</p><Link className="care-text-link" href="/therapy/">Explore therapy <span aria-hidden="true">&rarr;</span></Link></article><article><span className="care-practice-symbol" aria-hidden="true">&#9676;</span><h3>Research &amp; discovery</h3><p>Research into women’s health, cognitive neuroscience, and care that fits our communities.</p><Link className="care-text-link" href="/research/">Explore our research <span aria-hidden="true">&rarr;</span></Link></article><article><span className="care-practice-symbol" aria-hidden="true">&#10023;</span><h3>Learning &amp; training</h3><p>Supervised internships, practical workshops, and mentoring for psychology students.</p><Link className="care-text-link" href="/training/">Explore the academy <span aria-hidden="true">&rarr;</span></Link></article></div></div></section>
 
-      <section className="sec" aria-labelledby="approach-h">
-        <div className="wrap split">
-          <div className="prose rv">
-            <h2 id="approach-h" style={{ margin: 0 }}>Our approach</h2>
-            <p>We are guided by curiosity, compassion, scientific thinking and a commitment to responsible knowledge-sharing. We value interdisciplinary perspectives, respect the diversity of human experience, and communicate psychology without unnecessary jargon or sensationalism.</p>
-            <p>As the platform grows, our goal is to bring together research, education, practical resources and thoughtful conversations across disciplines that are often explored separately.</p>
-            <h3>Our values</h3>
-            <ul className="vals">{VALUES.map((v, i) => <li key={i}>{v}</li>)}</ul>
-          </div>
-          <div className="panelbox rv" style={{ '--i': 1 }}>
-            <h3>In therapy</h3>
-            <ul className="ticks">{TICKS.map((t, i) => <li key={i} dangerouslySetInnerHTML={{ __html: t }} />)}</ul>
-          </div>
-        </div>
-      </section>
+      <section className="care-section" aria-labelledby="founders"><div className="wrap"><header className="care-section-head"><span className="care-kicker">The people behind Manoyuti</span><h2 id="founders">Meet Isha &amp; Ira</h2><p>Two perspectives, connected by a shared care for people and psychological science.</p></header><div className="care-founder-grid">
+        <article className="care-founder"><div className="care-founder-heading"><span className="care-founder-monogram" aria-hidden="true">Isha</span><div><h3>Isha Tiwari</h3><p className="care-founder-role">Psychologist &amp; clinical educator</p></div></div><p>Isha is a practising psychologist, Assistant Professor at Amity University, Bengaluru, and a PhD Scholar at Christ University. She has supported more than 1,000 individuals and couples with concerns including anxiety, trauma, OCD, relationships, and mood.</p><h4>Education &amp; experience</h4><ul className="care-credential-list">{ISHA_CREDENTIALS.map(credential => <li key={credential}>{credential}</li>)}</ul></article>
+        <article className="care-founder"><div className="care-founder-heading"><span className="care-founder-monogram" aria-hidden="true">Ira</span><div><h3>Ira Tiwari</h3><p className="care-founder-role">Psychology researcher &amp; PhD scholar</p></div></div><p>Ira is a psychology researcher and doctoral scholar interested in women’s reproductive and emotional health, cognitive neuroscience, and accessible psychological interventions. Her work connects research, care, and technology.</p><h4>Research interests</h4><ul className="care-credential-list">{IRA_FOCUS_AREAS.map(area => <li key={area}>{area}</li>)}</ul></article>
+      </div></div></section>
 
-      <section className="sec tight" aria-labelledby="vision-h">
-        <div className="wrap">
-          <div className="band rv">
-            <div><h2 id="vision-h">Our vision</h2><p>To build a space where science feels human, psychology feels accessible, women's experiences are heard, and technology helps knowledge reach the people who need it.</p></div>
-            <div className="acts"><Link className="btn light" href="/booking/">Book a session <span className="arr" aria-hidden="true">→</span></Link></div>
-          </div>
-        </div>
-      </section>
-    </>
+      <section className="care-section care-section-blue" aria-labelledby="values-title"><div className="wrap"><header className="care-section-head"><span className="care-kicker">What matters to us</span><h2 id="values-title">Care you can feel comfortable with</h2></header><div className="care-values">{CORE_VALUES.map(value => <article key={value.num}><h3>{value.title}</h3><p>{value.desc}</p></article>)}</div></div></section>
+      <section className="care-closing"><div className="wrap"><div><span className="care-kicker">Start wherever you are</span><h2>There’s room for your questions.</h2><p>Whether you’re looking for support, training, or a research conversation, we’d be glad to hear from you.</p></div><div className="care-actions"><Link className="clean-btn-primary" href="/booking/">Request a session <span aria-hidden="true">&rarr;</span></Link><Link className="care-text-link" href="/contact/">Get in touch</Link></div></div></section>
+    </div>
   );
 }

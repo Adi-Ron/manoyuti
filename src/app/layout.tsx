@@ -6,31 +6,31 @@ import { ToastProvider } from '@/components/ui/Toast';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://resilio.in'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: {
-    default: 'Resilio by IshIra | Psychotherapy, Research and Training in Bengaluru',
-    template: '%s | Resilio by IshIra'
+    default: 'Manoyuti | Psychotherapy, Research and Training in Bengaluru',
+    template: '%s | Manoyuti'
   },
-  description: 'Resilio by IshIra brings together evidence-based psychotherapy, psychology research and training for students, led by psychologist Isha Tiwari in Bengaluru and online across India.',
+  description: 'Manoyuti brings together evidence-based psychotherapy, psychology research and training for students, led by psychologist Isha Tiwari in Bengaluru and online across India.',
   keywords: ['psychotherapy', 'psychology', 'therapy', 'counselling', 'CBT', 'training', 'research', 'Bengaluru', 'mental health'],
-  authors: [{ name: 'Resilio by IshIra' }],
-  creator: 'Resilio by IshIra',
-  publisher: 'Resilio by IshIra',
+  authors: [{ name: 'Manoyuti' }],
+  creator: 'Manoyuti',
+  publisher: 'Manoyuti',
   robots: 'index, follow',
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://resilio.in',
-    siteName: 'Resilio by IshIra',
-    title: 'Resilio by IshIra | Psychotherapy, Research and Training in Bengaluru',
-    description: 'Resilio by IshIra brings together evidence-based psychotherapy, psychology research and training for students, led by psychologist Isha Tiwari in Bengaluru and online across India.',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    siteName: 'Manoyuti',
+    title: 'Manoyuti | Psychotherapy, Research and Training in Bengaluru',
+    description: 'Manoyuti brings together evidence-based psychotherapy, psychology research and training for students, led by psychologist Isha Tiwari in Bengaluru and online across India.',
     images: [
-      { url: '/og-image.jpg', width: 1200, height: 630, alt: 'Resilio by IshIra' }
+      { url: '/og-image.jpg', width: 1200, height: 630, alt: 'Manoyuti' }
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Resilio by IshIra',
+    title: 'Manoyuti',
     description: 'Evidence-based psychotherapy, psychology research and training in Bengaluru and online across India.',
     images: ['/og-image.jpg']
   },

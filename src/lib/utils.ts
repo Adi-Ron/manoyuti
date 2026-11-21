@@ -110,7 +110,7 @@ export const FAQ_DATA = [
 ];
 
 export const JOURNEY_STEPS = [
-  { title: 'Send a request', desc: 'Book online, call or WhatsApp. We reply within 24 hours to confirm a time.' },
+  { title: 'Send a request', desc: 'Book online through our simple form. We reply within 24 hours to confirm your private time slot.' },
   { title: 'Fill in a short form', desc: 'A brief intake form helps your therapist prepare, so you don\'t have to repeat your story from the start.' },
   { title: 'Meet your therapist', desc: 'Talk about what brings you here and what you hope will change, and ask anything about how therapy and confidentiality work.' },
   { title: 'Agree on a plan', desc: 'Together you choose the approach, the goals and how often to meet. You leave knowing what happens next, and why.' }

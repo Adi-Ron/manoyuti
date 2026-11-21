@@ -1,6 +1,16 @@
-# Resilio by IshIra - Next.js + Supabase
+---
+title: Manoyuti
+emoji: 🌿
+colorFrom: green
+colorTo: gray
+sdk: docker
+app_port: 7860
+pinned: false
+---
 
-A modern, accessible website for Resilio by IshIra — evidence-based psychotherapy, psychology research and training in Bengaluru and online across India.
+# Manoyuti - Next.js + Supabase
+
+A modern, accessible website for Manoyuti — evidence-based psychotherapy, psychology research and training in Bengaluru and online across India.
 
 ## Tech Stack
 
@@ -14,7 +24,7 @@ A modern, accessible website for Resilio by IshIra — evidence-based psychother
 
 The design combines:
 - **Meridian beige palette** (from option5-meridian-beige.html): warm beige backgrounds, bronze accents, sage greens
-- **Resilio taupe & rose palette** (from resilio-site): taupe pages, espresso type, rose highlights
+- **Manoyuti taupe & rose palette** (from resilio-site): taupe pages, espresso type, rose highlights
 
 ## Features
 
@@ -69,7 +79,7 @@ NEXT_PUBLIC_SUPABASE_URL=your-project-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_SITE_NAME=Resilio by IshIra
+NEXT_PUBLIC_SITE_NAME=Manoyuti
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
@@ -156,16 +166,37 @@ npm run db:reset
 - `--sage`: #46594c
 - `--bronze`: #9a794c
 
-### Colors (Resilio)
+### Colors (Manoyuti)
 - `--taupe`: #CDBFB3
 - `--espresso`: #2A211E
 - `--rose`: #E8C3BE
 - `--blush`: #E8C3BE
 
 ### Typography
-- **Headings**: Newsreader (Meridian) / Nunito Sans (Resilio)
-- **Body**: Hanken Grotesk (Meridian) / Nunito Sans (Resilio)
+- **Headings**: Newsreader (Meridian) / Nunito Sans (Manoyuti)
+- **Body**: Hanken Grotesk (Meridian) / Nunito Sans (Manoyuti)
 
 ## License
 
-© 2026 Resilio by IshIra. All rights reserved.
+© 2026 Manoyuti. All rights reserved.
+## Booking emails and confirmations
+
+1. Run `supabase/booking-confirmation.sql` in this project's Supabase SQL Editor. It adds appointment and email-status fields; existing requests are preserved.
+2. Configure real `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, and `SMTP_PASS` values in `.env.local`. Gmail requires an app password. Use port 587 (STARTTLS) or 465 (TLS).
+3. Restart the app. New requests notify `ishatiwari1706@gmail.com`. The sender is your authenticated SMTP account, displayed as Manoyuti.
+4. In Admin → Bookings, choose the agreed date and time (IST) and enter the secure meeting link or full address. **Confirm & email client** sends the confirmation and records its acceptance by the mail server.
+
+Saved requests are retained when email delivery is unavailable. Admin can retry therapist notifications. Database leases prevent concurrent duplicate sends; an email timeout can still have an ambiguous delivery result, so check delivery before manually retrying. SMTP acceptance does not guarantee inbox placement.
+
+Reflections and Site settings are no longer admin features; their old URLs redirect to the overview. Stored data is retained.
+
+
+## Hugging Face deployment
+
+This repository includes a Docker Space configuration using port 7860 and Next.js standalone output. Set these **public Variables before building**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and `NEXT_PUBLIC_SITE_URL` (the Space app URL).
+
+Set these **runtime Secrets** in the Space: `SUPABASE_SERVICE_ROLE_KEY` and `ADMIN_EMAIL`. Do not upload `.env.local` or local screenshots. Existing Supabase data remains in Supabase.
+
+Hugging Face blocks SMTP ports. When email is enabled later, configure `RESEND_API_KEY` as a Secret and `MAIL_FROM` with a sender verified by Resend. The app automatically uses its HTTPS API; SMTP is disabled inside Spaces. Appointment emails also require `supabase/booking-confirmation.sql` in the database.
+
+Hugging Face currently requires an eligible paid account plan to create Docker Spaces. No paid hardware or subscription should be enabled without the account owner's authorization.

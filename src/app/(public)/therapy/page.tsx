@@ -1,154 +1,206 @@
-import Link from 'next/link';
-import { SERVICES, CONCERNS, APPROACHES, JOURNEY_STEPS, FAQ_DATA } from '@/lib/utils';
+'use client';
 
-const THERAPY_CARDS = [
-  { id: 'individual', name: 'Individual therapy', meta: ['50 minutes', '₹1,500'], desc: 'One-to-one sessions for adults and young adults, for anxiety and panic, depression and low mood, trauma, OCD, stress and burnout, grief, self-esteem, sleep difficulties and addiction.', link: '/booking/?service=individual', linkText: 'Book individual therapy', icon: 'user', tint: 't-sage' },
-  { id: 'couples', name: 'Couples therapy', meta: ['60–75 minutes', '₹3,000'], desc: 'A neutral, supportive space for partners to understand each other again: communication breakdown, recurring conflict, trust after betrayal, life transitions and emotional distance.', link: '/booking/?service=couples', linkText: 'Book couples therapy', icon: 'users', tint: 't-blush' },
-  { id: 'assessment', name: 'Psychological assessments', meta: ['Written report', '₹999'], desc: 'Standardised assessments of mood, anxiety and other areas using validated tools, with a written report and recommendations you can share with your care team.', link: '/booking/?service=assessment', linkText: 'Book an assessment', icon: 'file-text', tint: 't-sky' },
-  { id: 'fertility', name: 'Fertility counselling', meta: ['60 minutes', '₹2,000'], desc: 'Emotional support for individuals and couples facing fertility concerns, IVF and other treatments, pregnancy loss, or difficult decisions about building a family, alongside your medical care.', link: '/booking/?service=fertility', linkText: 'Book fertility counselling', icon: 'heart', tint: 't-sand' },
-  { id: 'group', name: 'Group therapy and support circles', meta: ['Small groups', 'Fee on request'], desc: 'Small, facilitated groups on stress management, coping skills and building healthy relationships, with support from people who understand what you are going through.', link: '/contact/?interest=Therapy&about=Group%20therapy', linkText: 'Ask about groups', icon: 'users', tint: 't-sage' },
-  { id: 'workshops', name: 'Workshops for organisations', meta: ['Tailored', 'Fee on request'], desc: 'Evidence-based workshops for schools, colleges and workplaces on mental health awareness, stress, emotional wellbeing and resilience, with feedback collected to measure impact.', link: '/organisations/', linkText: 'Programmes for organisations', icon: 'briefcase', tint: 't-blush' },
+import { useState } from 'react';
+import Link from 'next/link';
+import { FAQ_DATA } from '@/lib/utils';
+
+interface TherapyService {
+  id: string;
+  name: string;
+  laymanTagline: string;
+  forWhom: string;
+  whatHappens: string;
+  duration: string;
+  fee: string;
+  tag?: string;
+  link: string;
+}
+
+const SERVICES_LAYMAN: TherapyService[] = [
+  {
+    id: 'individual',
+    name: 'Individual therapy',
+    laymanTagline: 'A private space to talk things through, understand yourself, and find a steadier way forward.',
+    forWhom: 'Anxiety, low mood, burnout, difficult experiences, or disrupted sleep.',
+    whatHappens: 'Time to talk, understand patterns, and practise tools from approaches such as CBT, ACT, and mindfulness.',
+    duration: '50 minutes',
+    fee: '₹1,500 per session',
+    tag: 'Most Requested',
+    link: '/booking/?service=individual'
+  },
+  {
+    id: 'couples',
+    name: 'Couples & relationship counselling',
+    laymanTagline: 'Time to understand each other, work through tension, and make space for better conversations.',
+    forWhom: 'Repeated arguments, emotional distance, life changes, or rebuilding trust.',
+    whatHappens: 'We listen to both perspectives and help you explore patterns, needs, and ways to communicate.',
+    duration: '60–75 minutes',
+    fee: '₹3,000 per session',
+    tag: 'Both Partners',
+    link: '/booking/?service=couples'
+  },
+  {
+    id: 'fertility',
+    name: 'Fertility & family planning care',
+    laymanTagline: 'Steady emotional support through fertility treatment, loss, and decisions about family.',
+    forWhom: 'Fertility treatment, pregnancy loss, family planning, and the feelings that come with them.',
+    whatHappens: 'Space for grief, uncertainty, and relationship changes, alongside your medical care.',
+    duration: '60 minutes',
+    fee: '₹2,000 per session',
+    tag: 'Specialized Care',
+    link: '/booking/?service=fertility'
+  },
+  {
+    id: 'assessment',
+    name: 'Psychological assessments & reports',
+    laymanTagline: 'A clearer understanding of what you’re experiencing, with a written report and recommendations.',
+    forWhom: 'Questions about mood, anxiety, attention, personality, or cognitive patterns in adults.',
+    whatHappens: 'We use standardised assessment tools to explore your concerns and provide a written report with recommendations.',
+    duration: 'Comprehensive evaluation',
+    fee: '₹999 (Includes formal report)',
+    tag: 'Diagnostic Clarity',
+    link: '/booking/?service=assessment'
+  }
 ];
 
-const HOW_CARDS = [
-  { icon: 'shield', name: 'Evidence first', desc: 'CBT, DBT, ACT, EMDR, SFBT, REBT and mindfulness-based therapies, matched to what you need.' },
-  { icon: 'heart', name: 'You, not a template', desc: 'Every plan is shaped around your needs, your goals and your pace.', tint: 'blush' },
-  { icon: 'globe', name: 'Online across India', desc: 'Secure video sessions wherever you are, at times that fit around work and family.', tint: 'sky' },
-  { icon: 'map-pin', name: 'In person in Bengaluru', desc: 'A calm, private room for those who prefer to meet face to face.', tint: 'sand' },
+const CONCERN_CATEGORIES = [
+  {
+    category: 'Mood & Emotional Wellbeing',
+    items: [
+      'Anxiety & panic attacks',
+      'Persistent sadness, emptiness or numbness',
+      'Burnout & emotional exhaustion',
+      'Anger, irritability & mood swings',
+      'Grief, loss & bereavement'
+    ]
+  },
+  {
+    category: 'Overthinking & Intrusive Thoughts',
+    items: [
+      'OCD & unwanted intrusive thoughts',
+      'Perfectionism & fear of failure',
+      'Difficulty falling or staying asleep',
+      'Low self-worth & imposter syndrome',
+      'Brain fog & sustained high stress'
+    ]
+  },
+  {
+    category: 'Relationships & Social Life',
+    items: [
+      'Repeated arguments with your partner',
+      'Fear of abandonment or fear of intimacy',
+      'Setting healthy boundaries with family',
+      'Social anxiety & fear of being judged',
+      'Coping with breakups or separation'
+    ]
+  },
+  {
+    category: 'Life Transitions & Identity',
+    items: [
+      'Navigating college-to-career transitions',
+      'PCOS & women’s hormonal mood shifts',
+      'Unresolved childhood experiences & trauma',
+      'Health anxiety & medical illness coping',
+      'Reconnecting with meaning and purpose'
+    ]
+  }
+];
+
+const HOW_WE_WORK_STEPS = [
+  {
+    num: '01',
+    title: 'Grounded in clinical science',
+    desc: 'We draw on evidence-based approaches and explain why a particular tool may help.'
+  },
+  {
+    num: '02',
+    title: 'Your experience comes first',
+    desc: 'Your background, relationships, strengths, and preferences help shape the way we work together.'
+  },
+  {
+    num: '03',
+    title: 'Care for your privacy',
+    desc: 'We protect what you share and explain confidentiality, including its limits, before we begin.'
+  },
+  {
+    num: '04',
+    title: 'Skills for everyday life',
+    desc: 'Together, we practise manageable skills you can use between sessions.'
+  }
+];
+
+const FIRST_SESSION_GUIDE = [
+  {
+    num: '01',
+    heading: 'Send a consultation request',
+    detail: 'Share the support you’re looking for and the times that work for you. We reply within 24 hours to arrange a session.'
+  },
+  {
+    num: '02',
+    heading: 'Complete your intake note',
+    detail: 'We send a short intake form before we meet, so you can share a little about yourself in your own time.'
+  },
+  {
+    num: '03',
+    heading: 'Meet for your first session',
+    detail: 'Meet Isha Tiwari online or in person in Bengaluru. There’s time to talk about what brings you in and ask questions.'
+  },
+  {
+    num: '04',
+    heading: 'Agree on a sustainable plan',
+    detail: 'Together, we discuss your goals and a session frequency that works for your life and budget.'
+  }
 ];
 
 export default function TherapyPage() {
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
   return (
-    <>
-      <section className="pagehead" aria-labelledby="th-h">
+    <div className="care-page care-therapy">
+      <section className="pagehead care-hero" aria-labelledby="th-h">
         <div className="wrap">
           <div className="txt">
-            <span className="label" style={{ '--i': 0 }}>Therapy and counselling</span>
-            <h1 id="th-h" style={{ '--i': 1 }}>Support that fits your life</h1>
-            <p className="lead" style={{ '--i': 2 }}>Whether you are facing a difficult season or want to understand yourself better, we offer care in a form that suits you, online and in person in Bengaluru.</p>
-            <div className="acts" style={{ '--i': 3 }}>
-              <Link className="btn" href="/booking/">Book a session <span className="arr" aria-hidden="true">→</span></Link>
-              <Link className="btn line" href="https://wa.me/919936724392" target="_blank" rel="noopener noreferrer">
-                <svg className="i" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M3 21l1.7-4A8.5 8.5 0 1 1 8 19.8z" /><path d="M9 10h.01M12.5 10h.01M16 10h.01" />
-                </svg> WhatsApp us
-              </Link>
-            </div>
+            <span className="care-kicker">Therapy at Manoyuti</span>
+            <h1 id="th-h">A little space to feel more like yourself.</h1>
+            <p className="lead">Whatever brings you here, you can take it at your own pace. Thoughtful psychological care, online across India and in person in Bengaluru.</p>
+            <div className="care-actions"><Link className="clean-btn-primary" href="/booking/">Request a session <span aria-hidden="true">→</span></Link><a className="care-text-link" href="#services-h">Explore our services</a></div>
           </div>
-          <dl className="facts">
-            <div><dt>Individual therapy</dt><dd>50 min · ₹1,500</dd></div>
-            <div><dt>Couples therapy</dt><dd>60–75 min · ₹3,000</dd></div>
-            <div><dt>Assessment with report</dt><dd>₹999</dd></div>
-          </dl>
+          <aside className="care-hero-note" aria-label="A gentle reminder">
+            <span className="care-note-mark" aria-hidden="true">✳</span>
+            <p>You don’t need to have the right words. We can start with how things feel today.</p>
+            <span className="care-note-caption">Online & in-person · At your pace</span>
+          </aside>
         </div>
       </section>
 
-      <section className="sec" aria-labelledby="services-h">
+      <section className="care-section" aria-labelledby="services-h">
         <div className="wrap">
-          <div className="head"><h2 id="services-h" className="rv">Services and fees</h2><p className="rv">All sessions are confidential, within ethical and legal limits, and available online across India.</p></div>
-          <div className="cards c3">
-            {THERAPY_CARDS.map((card, i) => (
-              <article key={card.id} className={`card ${card.tint} rv`} style={{ '--i': i }}>
-                <span className="ic">
-                  <svg className="i" viewBox="0 0 24 24" aria-hidden="true">
-                    {card.icon === 'user' && <><circle cx="12" cy="8" r="4" /><path d="M5 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1" /></>}
-                    {card.icon === 'users' && <path d="M19.5 12.6 12 20l-7.5-7.4A5 5 0 1 1 12 6a5 5 0 1 1 7.5 6.6z" />}
-                    {card.icon === 'file-text' && <><rect x="8" y="3" width="8" height="4" rx="1" /><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" /><path d="M9 12h6M9 16h4" /></>}
-                    {card.icon === 'heart' && <><path d="M12 21v-9" /><path d="M12 12c0-3.5 2.5-6 7-6 0 4-3 6-7 6z" /><path d="M12 14.5c-4 0-7-2-7-5.5 4 0 7 1.5 7 5.5z" /></>}
-                    {card.icon === 'briefcase' && <><path d="M12 3l8 3v6c0 5-3.5 8.3-8 9-4.5-.7-8-4-8-9V6z" /><path d="M9 12l2 2 4-4" /></>}
-                  </svg>
-                </span>
-                <h3>{card.name}</h3>
-                <p className="meta"><b>{card.meta[0]}</b><b>{card.meta[1]}</b></p>
-                <p>{card.desc}</p>
-                <Link className="link" href={card.link}>{card.linkText} <span className="arr" aria-hidden="true">→</span></Link>
+          <header className="care-section-head"><span className="care-kicker">Find your starting point</span><h2 id="services-h">Care for what you’re carrying</h2><p>Choose the support that feels closest to what you need. If you’re unsure, we’ll help you find a place to begin.</p></header>
+          <div className="care-service-grid">
+            {SERVICES_LAYMAN.map(svc => (
+              <article key={svc.id} id={svc.id} className={`care-service care-service-${svc.id}`} aria-labelledby={`service-${svc.id}`}>
+                <div className="care-service-top"><span className="care-service-duration">{svc.duration}</span><span className="care-service-symbol" aria-hidden="true">{svc.id === 'couples' ? '↔' : svc.id === 'assessment' ? '◌' : svc.id === 'fertility' ? '❧' : '✳'}</span></div>
+                <h3 id={`service-${svc.id}`}>{svc.name}</h3><p className="care-service-intro">{svc.laymanTagline}</p>
+                <dl className="care-service-details"><div><dt>This may help with</dt><dd>{svc.forWhom}</dd></div><div><dt>In our sessions</dt><dd>{svc.whatHappens}</dd></div></dl>
+                <footer className="care-service-footer"><strong>{svc.fee}</strong><Link className="care-text-link" href={svc.link}>Request a session <span aria-hidden="true">→</span><span className="sr-only">: {svc.name}</span></Link></footer>
               </article>
             ))}
           </div>
+          <p className="care-footnote">Not sure which to choose? <Link href="/booking/?service=unsure">Start with “I’m not sure yet.”</Link></p>
         </div>
       </section>
 
-      <section className="sec tint" aria-labelledby="concerns-h">
-        <div className="wrap grid2">
-          <div className="head rv" style={{ margin: 0 }}>
-            <h2 id="concerns-h">Concerns we help with</h2>
-            <p>If what you're facing isn't listed, get in touch anyway, and we'll talk through whether Resilio is the right fit for you.</p>
-          </div>
-          <ul className="chips rv" style={{ '--i': 1 }}>
-            {CONCERNS.map((c, i) => <li key={i}>{c}</li>)}
-          </ul>
-        </div>
-      </section>
+      <section className="care-section care-section-tint care-concerns-section" aria-labelledby="concerns-h"><div className="wrap care-split">
+        <header className="care-section-head"><span className="care-kicker">There is room for all of it</span><h2 id="concerns-h">You don’t have to carry it alone.</h2><p>You don’t need a diagnosis or a crisis to seek support. Everyday difficulties deserve care, too.</p><Link className="care-text-link" href="/contact/">Ask us a question <span aria-hidden="true">→</span></Link></header>
+        <div className="care-concerns">{CONCERN_CATEGORIES.map(cat => <div key={cat.category} className="care-concern"><h3>{cat.category}</h3><ul>{cat.items.map(item => <li key={item}>{item}</li>)}</ul></div>)}</div>
+      </div></section>
 
-      <section className="sec" aria-labelledby="ways-h">
-        <div className="wrap">
-          <div className="head"><h2 id="ways-h" className="rv">How we work</h2><p className="rv">Therapies with strong research behind them, chosen for you rather than from a template.</p></div>
-          <div className="cards">
-            {HOW_CARDS.map((card, i) => (
-              <article key={card.name} className={`card rv`} style={{ '--i': i }}>
-                <span className="ic {card.tint ? card.tint : ''}">
-                  <svg className="i" viewBox="0 0 24 24" aria-hidden="true">
-                    {card.icon === 'shield' && <><path d="M12 3l8 3v6c0 5-3.5 8.3-8 9-4.5-.7-8-4-8-9V6z" /><path d="M9 12l2 2 4-4" /></>}
-                    {card.icon === 'heart' && <path d="M19.5 12.6 12 20l-7.5-7.4A5 5 0 1 1 12 6a5 5 0 1 1 7.5 6.6z" />}
-                    {card.icon === 'globe' && <><rect x="3" y="6" width="13" height="12" rx="2" /><path d="M16 10l5-3v10l-5-3z" /></>}
-                    {card.icon === 'map-pin' && <><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z" /><circle cx="12" cy="10" r="2.5" /></>}
-                  </svg>
-                </span>
-                <h3>{card.name}</h3>
-                <p>{card.desc}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section className="care-section" aria-labelledby="ways-h"><div className="wrap"><header className="care-section-head"><span className="care-kicker">A partnership, at your pace</span><h2 id="ways-h">What you can expect from us</h2></header><div className="care-values">{HOW_WE_WORK_STEPS.map(card => <article key={card.num}><h3>{card.title}</h3><p>{card.desc}</p></article>)}</div></div></section>
 
-      <section className="sec tint-sage" aria-labelledby="journey-h">
-        <div className="wrap">
-          <div className="head center"><h2 id="journey-h" className="rv">Your first session, step by step</h2><p className="rv">You'll always know what happens next.</p></div>
-          <ol className="journey">
-            {JOURNEY_STEPS.map((step, i) => (
-              <li key={i} className="rv" style={{ '--i': i }}>
-                <span className="n">Step {i + 1}</span>
-                <h3>{step.title}</h3>
-                <p>{step.desc}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <section className="care-section care-section-blue" aria-labelledby="journey-h"><div className="wrap"><header className="care-section-head"><span className="care-kicker">The first step can be small</span><h2 id="journey-h">From reaching out to settling in</h2><p>A clear picture of what happens next, so there’s a little less to wonder about.</p></header><ol className="care-timeline">{FIRST_SESSION_GUIDE.map(step => <li key={step.num}><span className="care-step-number" aria-hidden="true">{step.num}</span><div><h3>{step.heading}</h3><p>{step.detail}</p></div></li>)}</ol></div></section>
 
-      <section className="sec" aria-labelledby="faq-h">
-        <div className="wrap grid2" style={{ alignItems: 'start' }}>
-          <div className="head rv" style={{ margin: 0 }}>
-            <h2 id="faq-h">Questions people ask</h2>
-            <p>Can't find your answer? <Link className="link" href="/contact/">Send us a message</Link>.</p>
-            <div className="crisis" style={{ marginTop: 12 }}>
-              <span className="ic"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M5.6 5.6l3.6 3.6M14.8 14.8l3.6 3.6M18.4 5.6l-3.6 3.6M9.2 14.8l-3.6 3.6"/></svg></span>
-              <div><h3>Need help right now?</h3><p>Resilio is not an emergency service. In crisis, call Tele-MANAS on <a href="tel:14416">14416</a> (free, 24/7) or go to your nearest hospital.</p></div>
-            </div>
-          </div>
-          <div className="acc rv" style={{ '--i': 1 }}>
-            {FAQ_DATA.map((item, i) => (
-              <details key={i}>
-                <summary>{item.q}</summary>
-                <p>{item.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="sec tight" aria-labelledby="close-h">
-        <div className="wrap">
-          <div className="band rv">
-            <div><h2 id="close-h">Ready when you are</h2><p>Choose a service, tell us when suits you, and we'll reply within 24 hours to confirm.</p></div>
-            <div className="acts">
-              <Link className="btn light" href="/booking/">Book a session <span className="arr" aria-hidden="true">→</span></Link>
-              <Link className="btn line" href="tel:+919936724392"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg> Call us</Link>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+      <section className="care-section care-faq-section" aria-labelledby="faq-h"><div className="wrap care-split"><header className="care-section-head"><span className="care-kicker">A few things you may wonder</span><h2 id="faq-h">Before we begin</h2><p>Questions are welcome. If you need to know something else, <Link href="/contact/">get in touch</Link>.</p><aside className="care-crisis"><h3>Need immediate support?</h3><p>Manoyuti is not an emergency service. In a crisis, call <a href="tel:14416">Tele-MANAS on 14416</a> or visit your nearest hospital.</p></aside></header><div className="care-faq">{FAQ_DATA.map((item, i) => <div key={item.q} className="care-faq-item"><h3><button type="button" aria-expanded={activeFaq === i} aria-controls={`care-answer-${i}`} onClick={() => setActiveFaq(activeFaq === i ? null : i)}><span>{item.q}</span><span aria-hidden="true">{activeFaq === i ? '−' : '+'}</span></button></h3><div id={`care-answer-${i}`} hidden={activeFaq !== i}><p>{item.a}</p></div></div>)}</div></div></section>
+      <section className="care-closing"><div className="wrap"><div><span className="care-kicker">Whenever you feel ready</span><h2>We can take the next step together.</h2><p>Tell us a little about what you need. We’ll reply within 24 hours.</p></div><Link className="clean-btn-primary" href="/booking/">Request a session <span aria-hidden="true">→</span></Link></div></section>
+    </div>
   );
 }

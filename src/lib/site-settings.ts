@@ -7,7 +7,7 @@ export const DEFAULT_SETTINGS = {
   availability_hint: 'Tap to reserve',
   phone_display: '+91-9936724392',
   phone_e164: '+919936724392',
-  email: 'ishat1706@gmail.com',
+  email: 'ishatiwari1706@gmail.com',
   whatsapp_number: '919936724392',
   crisis_text: 'Need urgent support? Call Tele-MANAS',
   crisis_phone: '14416',
@@ -100,7 +100,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
         typeof row.value === 'string' &&
         row.value.trim()
       ) {
-        (settings as Record<string, string>)[row.key] = row.value;
+        (settings as Record<string, string>)[row.key] = row.value.replace(/Resilio by IshIra|Resilio|RESILIO/g, 'Manoyuti');
       }
     }
   } catch {
@@ -126,7 +126,7 @@ export async function getSiteSettingsWithStatus(): Promise<{ settings: SiteSetti
         typeof row.value === 'string' &&
         row.value.trim()
       ) {
-        (settings as Record<string, string>)[row.key] = row.value;
+        (settings as Record<string, string>)[row.key] = row.value.replace(/Resilio by IshIra|Resilio|RESILIO/g, 'Manoyuti');
       }
     }
     return { settings, missing: false };

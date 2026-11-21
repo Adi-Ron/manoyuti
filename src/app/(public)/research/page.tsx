@@ -1,87 +1,154 @@
-import Link from 'next/link';
-import { RESEARCH_AREAS } from '@/lib/utils';
+'use client';
 
-const MENTORING = [
-  { name: 'PhD Proposal Mentoring', for: 'PhD applicants and early PhD scholars', desc: 'One-to-one support to shape a strong PhD proposal: finding the gap in the literature, framing your research questions, choosing a sound method and design, and preparing the proposal for review.', link: '/contact/?interest=Research%20mentoring&about=PhD%20Proposal%20Mentoring', linkText: 'Register interest', icon: 'file-text', tint: 't-blush' },
-  { name: 'Dissertation Mentoring', for: 'UG, PG and PhD students', desc: 'Support from research question to final write-up, as part of Resilio Training.', link: '/training/dissertation-mentoring/', linkText: 'About dissertation mentoring', icon: 'book-open', tint: 't-sand' },
+import Link from 'next/link';
+
+const RESEARCH_PILLARS = [
+  {
+    id: 'womens-health',
+    num: '01',
+    title: "Women's Health & Hormonal Wellbeing",
+    tag: 'Primary Focus',
+    lead: 'Investigating how conditions like PCOS, endometriosis, and reproductive transitions shape mood, anxiety, and self-image.',
+    details: [
+      'Emotional and psychiatric manifestations of Polycystic Ovary Syndrome (PCOS)',
+      'Perinatal mental health, postpartum mood shifts, and fertility stress',
+      'Body image distress and psychosocial coping strategies among Indian women'
+    ]
+  },
+  {
+    id: 'health-psychology',
+    num: '02',
+    title: 'Health Psychology & Chronic Illness',
+    tag: 'Mind-Body Care',
+    lead: 'Examining psychological adaptation to medical conditions, treatment adherence, and holistic mind-body recovery.',
+    details: [
+      'Stress vulnerability, autonomic regulation, and lifestyle intervention design',
+      'Doctor-patient communication and psychological safety in clinical settings',
+      'Mindfulness and cognitive resilience in long-term chronic pain management'
+    ]
+  },
+  {
+    id: 'intervention-dev',
+    num: '03',
+    title: 'Intervention Development & Feasibility',
+    tag: 'Translational Science',
+    lead: 'Developing, piloting, and standardizing accessible psychosocial interventions adapted to the Indian cultural context.',
+    details: [
+      'Culturally adapted CBT and ACT modules for Indian young adults',
+      'Brief, high-impact psychoeducational programmes for educational institutions',
+      'Measuring clinical feasibility, client retention, and therapeutic outcome metrics'
+    ]
+  },
+  {
+    id: 'methods-lab',
+    num: '04',
+    title: 'Qualitative Methodology & Mixed Methods',
+    tag: 'Scientific Rigour',
+    lead: 'Giving depth to scientific inquiry through advanced thematic analysis, semi-structured interviews, and mixed-method synthesis.',
+    details: [
+      'Rigorous thematic coding protocols in NVivo and reflexive qualitative inquiry',
+      'Psychometric validation of standardized screening instruments in India',
+      'Survey experiment designs using Qualtrics, R, JAMOVI, and SPSS'
+    ]
+  }
+];
+
+const MENTORING_TRACKS = [
+  {
+    title: 'PhD Proposal & Thesis Mentoring',
+    audience: 'PhD Applicants & Doctoral Scholars',
+    desc: 'One-to-one scholarly mentorship to formulate airtight research questions, conduct comprehensive literature syntheses, identify genuine research gaps, and design ethically sound methodologies.',
+    tag: 'Doctoral Track',
+    link: '/contact/?interest=Research%20mentoring'
+  },
+  {
+    title: 'PG & UG Dissertation Guidance',
+    audience: 'Masters & Bachelors Students',
+    desc: 'Step-by-step guidance through your academic dissertation—from ethical board submissions and participant recruitment to statistical analysis, thematic coding, and thesis write-up.',
+    tag: 'Dissertation Track',
+    link: '/training/dissertation-mentoring/'
+  }
 ];
 
 export default function ResearchPage() {
   return (
     <>
-      <section className="pagehead sky" aria-labelledby="rs-h">
-        <div className="wrap">
-          <div className="txt">
-            <span className="label" style={{ '--i': 0 }}>Research and development</span>
-            <h1 id="rs-h" style={{ '--i': 1 }}>Research that asks better questions</h1>
-            <p className="lead" style={{ '--i': 2 }}>We study how psychological care can be developed, adapted and evaluated to fit the lived experience of the people it serves, especially women.</p>
-            <div className="acts" style={{ '--i': 3 }}><Link className="btn" href="/contact/?interest=Research%20collaboration">Collaborate with us <span className="arr" aria-hidden="true">→</span></Link></div>
+      <section className="care-hero" aria-labelledby="research-title">
+        <div className="wrap care-hero-grid">
+          <div className="care-intro">
+            <span className="care-kicker">Research & academic development</span>
+            <h1 id="research-title">Better questions. More human care.</h1>
+            <p className="care-lead">We bring psychological science, clinical practice and lived experience together to make care more accessible and meaningful.</p>
+            <Link className="care-button" href="/contact/?interest=Research%20collaboration">Explore a collaboration <span aria-hidden="true">→</span></Link>
           </div>
-          <dl className="facts"><div><dt>Research projects supervised</dt><dd>15+</dd></div><div><dt>Led by</dt><dd>Ira & Isha Tiwari</dd></div></dl>
+          <dl className="care-facts">
+            <div><dt>Experience</dt><dd>15+ supervised studies</dd></div>
+            <div><dt>Approach</dt><dd>Qualitative & mixed methods</dd></div>
+            <div><dt>Led by</dt><dd>Isha & Ira Tiwari</dd></div>
+          </dl>
         </div>
       </section>
 
-      <section className="sec" aria-labelledby="why-h">
-        <div className="wrap split">
-          <h2 id="why-h" className="rv">Why research sits beside therapy</h2>
-          <div className="prose rv" style={{ '--i': 1 }}>
-            <p>Psychological care should be informed by evidence, grounded in human experience, and continuously improved through research and innovation. Our research asks how interventions can be developed and adapted so they respond better to the realities of people's lives.</p>
-            <p>We bring together psychology, health and technology: fields that are often explored separately. The aim is to translate research into ideas, tools and services that make support more informed, inclusive and accessible.</p>
+      <section className="care-section" aria-labelledby="research-approach">
+        <div className="wrap care-split">
+          <div className="care-section-head">
+            <span className="care-kicker">Our approach</span>
+            <h2 id="research-approach">Research and therapy inform each other.</h2>
+          </div>
+          <div className="care-prose">
+            <p>The questions people bring to therapy help us understand what needs further study. Research, in turn, helps us refine the tools we offer in practice.</p>
+            <p>Our focus is evidence that works in everyday life, with particular attention to women’s health, the Indian cultural context and people living with long-term health conditions.</p>
           </div>
         </div>
       </section>
 
-      <section className="sec tint" aria-labelledby="areas-h">
+      <section className="care-section care-section-soft" aria-labelledby="research-areas">
         <div className="wrap">
-          <div className="head"><h2 id="areas-h" className="rv">What we study</h2><p className="rv">Six areas guide our projects, our teaching and our writing.</p></div>
-          <div className="cards c3">
-            {RESEARCH_AREAS.map((area, i) => (
-              <article key={area.id} className="card rv" style={{ '--i': i }}>
-                <span className="ic {area.id === 'womens-health' ? 'blush' : ''}">
-                  <svg className="i" viewBox="0 0 24 24" aria-hidden="true">
-                    {area.id === 'womens-health' && <><path d="M12 21v-9"/><path d="M12 12c0-3.5 2.5-6 7-6 0 4-3 6-7 6z"/><path d="M12 14.5c-4 0-7-2-7-5.5 4 0 7 1.5 7 5.5z"/></>}
-                    {area.id === 'health-psychology' && <path d="M19.5 12.6 12 20l-7.5-7.4A5 5 0 1 1 12 6a5 5 0 1 1 7.5 6.6z"/>}
-                    {area.id === 'cognitive-neuroscience' && <><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></>}
-                    {area.id === 'victimology' && <><path d="M12 3l8 3v6c0 5-3.5 8.3-8 9-4.5-.7-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></>}
-                    {area.id === 'intervention-dev' && <><rect x="8" y="3" width="8" height="4" rx="1"/><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><path d="M9 12h6M9 16h4"/></>}
-                    {area.id === 'psychology-tech' && <><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></>}
-                  </svg>
-                </span>
-                <h3>{area.name}</h3>
-                <p>{area.desc}</p>
+          <div className="care-section-head">
+            <span className="care-kicker">Areas of inquiry</span>
+            <h2 id="research-areas">What we are exploring</h2>
+            <p>Four connected areas guide our research and intervention development.</p>
+          </div>
+          <div className="care-grid">
+            {RESEARCH_PILLARS.map(area => (
+              <article key={area.id} className="care-card">
+                <span className="care-kicker">{area.tag}</span>
+                <h3>{area.title}</h3>
+                <p>{area.lead}</p>
+                <details className="care-details">
+                  <summary>Explore research topics</summary>
+                  <ul className="care-list">{area.details.map(point => <li key={point}>{point}</li>)}</ul>
+                </details>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="sec" aria-labelledby="mentor-h">
+      <section className="care-section" aria-labelledby="mentoring-title">
         <div className="wrap">
-          <div className="head"><span className="label rv">Research mentoring</span><h2 id="mentor-h" className="rv">Mentoring for researchers</h2><p className="rv">One-to-one guidance from someone who has supervised more than 15 research projects.</p></div>
-          <div className="cards c3">
-            {MENTORING.map((item, i) => (
-              <article key={item.name} className={`card ${item.tint} rv`} style={{ '--i': i }}>
-                <span className="soon-tag">Coming soon</span>
-                <span className="ic"><svg className="i" viewBox="0 0 24 24" aria-hidden="true">
-                  {item.icon === 'file-text' && <><path d="M9 3h6"/><path d="M10 3v6L5 18a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/><path d="M7.5 15h9"/></>}
-                  {item.icon === 'book-open' && <><path d="M4 19V5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 0 2 2h14"/><path d="M8 7h8M8 11h6"/></>}
-                </svg></span>
-                <h3>{item.name}</h3>
-                <p className="meta">{item.for}</p>
-                <p>{item.desc}</p>
-                <Link className="link" href={item.link}>{item.linkText} <span className="arr" aria-hidden="true">→</span></Link>
+          <div className="care-section-head">
+            <span className="care-kicker">Academic mentorship</span>
+            <h2 id="mentoring-title">Support for your next research step</h2>
+            <p>One-to-one guidance for students and scholars, from a first proposal to the final write-up.</p>
+          </div>
+          <div className="care-grid">
+            {MENTORING_TRACKS.map(track => (
+              <article key={track.title} className="care-card">
+                <span className="care-kicker">{track.audience}</span>
+                <h3>{track.title}</h3>
+                <p>{track.desc}</p>
+                <div className="care-card-footer"><Link href={track.link} className="care-link">Ask about mentoring <span aria-hidden="true">→</span></Link></div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="sec tight" aria-labelledby="collab-h">
-        <div className="wrap">
-          <div className="band rv">
-            <div><h2 id="collab-h">Work with us</h2><p>Collaborate on a study, invite us to speak, or ask about taking part in our research.</p></div>
-            <div className="acts"><Link className="btn light" href="/contact/?interest=Research%20collaboration">Get in touch <span className="arr" aria-hidden="true">→</span></Link></div>
-          </div>
+      <section className="care-section care-section-soft" aria-labelledby="collaboration-title">
+        <div className="wrap care-callout">
+          <div><span className="care-kicker">Work with us</span><h2 id="collaboration-title">A shared question is a good place to start.</h2><p>We welcome conversations with universities, healthcare institutions and research teams about psychological studies and clinical research.</p></div>
+          <Link className="care-button" href="/contact/?interest=Research%20collaboration">Start a conversation <span aria-hidden="true">→</span></Link>
         </div>
       </section>
     </>

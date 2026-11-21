@@ -29,6 +29,12 @@ CREATE TABLE booking_requests (
   note TEXT,
   consent BOOLEAN DEFAULT FALSE,
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'cancelled', 'completed')),
+  scheduled_at TIMESTAMPTZ,
+  session_location TEXT,
+  confirmation_sent_at TIMESTAMPTZ,
+  confirmation_sending_at TIMESTAMPTZ,
+  request_notified_at TIMESTAMPTZ,
+  request_notification_sending_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -159,6 +165,10 @@ GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated, anon;
 
 CREATE POLICY "Users can view own profile" ON profiles FOR SELECT USING (auth.uid() = id);
 CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE USING (auth.uid() = id) WITH CHECK (auth.uid() = id);
+-- RLS limits rows; column privileges prevent clients granting themselves admin.
+REVOKE UPDATE ON public.profiles FROM PUBLIC, anon, authenticated;
+REVOKE UPDATE (id, role, created_at, updated_at) ON public.profiles FROM PUBLIC, anon, authenticated;
+GRANT UPDATE (full_name, phone) ON public.profiles TO authenticated;
 CREATE POLICY "Admins can view all profiles" ON profiles FOR SELECT USING (public.is_admin());
 
 CREATE POLICY "Anyone can insert booking" ON booking_requests FOR INSERT WITH CHECK (true);
@@ -217,3 +227,6 @@ INSERT INTO site_settings (key, value) VALUES
   ('cta_title', 'Taking the first step is often the hardest'),
   ('cta_text', 'Send a booking request, call or WhatsApp. We''ll reply within 24 hours.')
 ON CONFLICT (key) DO NOTHING;
+
+-- Booking writes go through validated server routes; client API roles cannot forge confirmation fields.
+REVOKE INSERT, UPDATE, DELETE ON public.booking_requests FROM PUBLIC, anon, authenticated;

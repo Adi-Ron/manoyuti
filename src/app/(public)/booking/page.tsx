@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useToast } from '@/components/ui/Toast';
@@ -44,6 +44,10 @@ function BookingForm() {
   });
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [notificationPending, setNotificationPending] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const confirmationRef = useRef<HTMLDivElement>(null);
   const [minDate, setMinDate] = useState('');
 
   useEffect(() => {
@@ -84,6 +88,7 @@ function BookingForm() {
       setFormData(prev => ({ ...prev, [name]: value }));
     }
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: false }));
+    if (name === 'days' || name === 'times') setErrors(prev => ({ ...prev, when: false }));
   };
 
   const getService = () => SERVICES.find(s => s.value === formData.service);
@@ -110,7 +115,8 @@ function BookingForm() {
       when: !formData.days.length || !formData.times.length,
       name: !formData.name.trim(),
       email: !formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email),
-      consent: !formData.consent
+      consent: !formData.consent,
+      from: !!formData.from && formData.from < minDate
     };
     setErrors(newErrors);
     return !Object.values(newErrors).some(v => v);
@@ -118,8 +124,15 @@ function BookingForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
+    setSubmitError('');
     if (!validate()) {
       showToast('A few details are missing. They\'re marked above.');
+      requestAnimationFrame(() => {
+        const invalid = document.querySelector<HTMLElement>('.book-form [aria-invalid="true"], .book-form fieldset:has(.err:not([hidden])) input');
+        invalid?.focus();
+        invalid?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      });
       return;
     }
     setSubmitting(true);
@@ -141,11 +154,14 @@ function BookingForm() {
           consent: formData.consent
         })
       });
-      if (!res.ok) throw new Error('Request failed');
+      if (!res.ok) throw new Error(res.status === 503 ? 'Booking requests are temporarily unavailable. Please use the contact page to reach us, or try again later. Your details are still here.' : 'Your request could not be sent. Please try again, or use the contact page to reach us. Your details are still here.');
+      const result = await res.json();
+      setNotificationPending(result.notification !== 'sent');
       showToast('Thank you! We\'ll reply within 24 hours.');
-      setFormData({ service: '', format: '', days: [], times: [], from: '', name: '', email: '', phone: '', first: 'This would be my first session', note: '', consent: false });
-    } catch {
-      showToast('Something went wrong. Please try again or email us directly.');
+      setSent(true);
+      requestAnimationFrame(() => confirmationRef.current?.focus());
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Your request could not be sent. Please try again.');
     } finally { setSubmitting(false); }
   };
 
@@ -158,13 +174,20 @@ function BookingForm() {
             <h1 id="bk-h" style={{ '--i': 1 }}>Book a session</h1>
             <p className="lead" style={{ '--i': 2 }}>Tell us what you'd like and when suits you. We'll reply within 24 hours to confirm a time and send the intake form.</p>
           </div>
-          <dl className="facts"><div><dt>We reply within</dt><dd>24 hours</dd></div><div><dt>Prefer to talk?</dt><dd><a href="tel:+919936724392">+91-9936724392</a></dd></div></dl>
+          <dl className="facts"><div><dt>We reply within</dt><dd>24 hours</dd></div><div><dt>Format</dt><dd>Online & In-person</dd></div></dl>
         </div>
       </section>
 
       <section className="sec tight" aria-label="Booking request">
         <div className="wrap book-grid">
-          <form className="book-form" onSubmit={handleSubmit} noValidate>
+          {sent ? <div className="booking-confirmation" ref={confirmationRef} tabIndex={-1} role="status">
+            <span className="clean-pill">Request received</span>
+            <h2>You've taken the first step.</h2>
+            <p>Thank you, {formData.name.trim()}. We’ll reply to <strong>{formData.email}</strong> within 24 hours to arrange your session.</p>
+            <p>Your appointment is confirmed once we agree on a time together. There’s nothing to pay here.</p>
+            {notificationPending && <p>Your request is safely saved. If you need to follow up sooner, <a href="mailto:ishatiwari1706@gmail.com">email the therapist</a>. Please don’t submit the request again.</p>}
+            <Link className="clean-btn-secondary" href="/therapy/">Explore what to expect</Link>
+          </div> : <form className="book-form" onSubmit={handleSubmit} noValidate aria-busy={submitting}>
             <fieldset className="step" id="s-service">
               <legend><h2>What would you like?</h2></legend>
               <div className="choices">
@@ -202,17 +225,18 @@ function BookingForm() {
                 <div className="field">
                   <label htmlFor="b-from">Earliest date <span className="opt-l">(optional)</span></label>
                   <div className="date-input-wrap">
-                    <svg className="date-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
-                    <input id="b-from" name="from" type="date" min={minDate || undefined} value={formData.from} onChange={handleChange} />
+                    <svg className="date-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M8 3v4M16 3v4M3 10h18" /></svg>
+                    <input id="b-from" name="from" type="date" min={minDate || undefined} value={formData.from} onChange={handleChange} aria-invalid={errors.from} aria-describedby={errors.from ? 'e-date' : undefined} />
                   </div>
                 </div>
                 <div className="date-quick" role="group" aria-label="Quick date options">
-                  <button type="button" onClick={() => setFormData(prev => ({ ...prev, from: dateInDays(3) }))}>This week</button>
+                  <button type="button" onClick={() => setFormData(prev => ({ ...prev, from: dateInDays(3) }))}>In a few days</button>
                   <button type="button" onClick={() => setFormData(prev => ({ ...prev, from: dateInDays(7) }))}>Next week</button>
                   {formData.from && <button type="button" className="clear" onClick={() => setFormData(prev => ({ ...prev, from: '' }))}>Clear</button>}
                 </div>
               </div>
               <p className="err" id="e-when" hidden={!errors.when}>Pick at least one day and one time of day.</p>
+              <p className="err" id="e-date" hidden={!errors.from}>Choose today or a later date.</p>
             </fieldset>
 
             <fieldset className="step" id="s-you">
@@ -237,7 +261,7 @@ function BookingForm() {
                     required
                   />
                   <span className="consent-text">
-                    <strong>I understand Resilio is not an emergency service</strong>, and I am happy to be contacted about this booking request.
+                    <strong>I understand Manoyuti is not an emergency service</strong>, and I am happy to be contacted about this booking request.
                   </span>
                 </label>
                 <div className="consent-policy-note">
@@ -258,6 +282,7 @@ function BookingForm() {
               </p>
             </fieldset>
 
+            {submitError && <p className="booking-error" role="alert">{submitError} <Link href="/contact/">Contact us</Link></p>}
             <div className="send-action-bar">
               <button className="btn btn-booking-submit" type="submit" disabled={submitting}>
                 <span>{submitting ? 'Sending request…' : 'Send booking request'}</span>
@@ -270,7 +295,7 @@ function BookingForm() {
                 <span>We reply within 24 hours. Your information is held strictly confidential.</span>
               </div>
             </div>
-          </form>
+          </form>}
 
           <aside className="summary" aria-labelledby="sum-h">
             <div className="sum-box green">

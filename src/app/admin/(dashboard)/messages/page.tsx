@@ -46,36 +46,36 @@ export default async function AdminMessagesPage() {
         ) : rows.length === 0 ? (
           <p className="admin-empty">No messages yet.</p>
         ) : (
-          <div className="admin-table-wrap">
+          <div className="admin-table-wrap" tabIndex={0} role="region" aria-label="Contact messages">
             <table className="admin-table">
               <thead>
                 <tr>
-                  <th>Received</th>
-                  <th>From</th>
-                  <th>Interest</th>
-                  <th>Message</th>
-                  <th>Status</th>
+                  <th scope="col">Received</th>
+                  <th scope="col">From</th>
+                  <th scope="col">Interest</th>
+                  <th scope="col">Message</th>
+                  <th scope="col">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {rows.map(row => (
                   <tr key={row.id}>
                     <td>
-                      {new Date(row.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {new Date(row.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' })}
                       <div className="note">
-                        {new Date(row.created_at).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+                        {new Date(row.created_at).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
                       </div>
                     </td>
                     <td>
                       {row.name}
-                      <div className="note">{row.email}</div>
-                      {row.phone && <div className="note">{row.phone}</div>}
+                      <div className="note"><a href={`mailto:${row.email}`}>{row.email}</a></div>
+                      {row.phone && <div className="note"><a href={`tel:${row.phone}`}>{row.phone}</a></div>}
                     </td>
                     <td>
                       {row.interest}
                       {row.preferred_time && <div className="note">Best time: {row.preferred_time}</div>}
                     </td>
-                    <td><div style={{ maxWidth: '42ch', whiteSpace: 'pre-wrap' }}>{row.message}</div></td>
+                    <td><div className="admin-message-text">{row.message}</div></td>
                     <td><span className={`admin-badge ${row.status}`}>{row.status}</span></td>
                   </tr>
                 ))}

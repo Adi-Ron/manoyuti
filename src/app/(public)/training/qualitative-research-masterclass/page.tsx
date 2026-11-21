@@ -1,65 +1,82 @@
-import Link from 'next/link';
+import { ProgrammeDetail } from '../_components/ProgrammeDetail';
 
 const PROGRAMME = {
   id: 'qualitative-research-masterclass',
   name: 'Qualitative Research Masterclass',
-  desc: 'Research design, interviews, focus groups, thematic analysis and coding in NVivo.',
-  for: 'postgraduate students and researchers',
-  format: 'Live online, small batch',
+  desc: 'Master qualitative study design, semi-structured interview protocols, focus groups, reflexive thematic analysis, and hands-on coding in NVivo.',
+  for: 'Postgraduate students, PhD scholars and researchers',
+  format: 'Live online masterclass, small batch',
   learn: [
-    'Designing a qualitative study',
-    'Running interviews and focus groups',
-    'Thematic analysis',
-    'Coding in NVivo'
+    'Designing qualitative epistemologies and interview schedules',
+    'Conducting ethical, in-depth semi-structured interviews',
+    'Reflexive thematic analysis following Braun & Clarke (2019)',
+    'Practical node coding, hierarchy building, and queries in NVivo'
   ]
 };
 
+const CONTENT = {
+  "category": "Research Methodology",
+  "action": "Register interest",
+  "facts": [
+    {
+      "label": "Eligible Cohort",
+      "value": PROGRAMME.for
+    },
+    {
+      "label": "Format",
+      "value": PROGRAMME.format
+    },
+    {
+      "label": "Software",
+      "value": "NVivo & Qualitative Suites"
+    }
+  ],
+  "curriculumLabel": "Curriculum Core",
+  "curriculumTitle": "What you will master",
+  "curriculumNote": "Includes raw transcript datasets, sample coding codebooks, and step-by-step guidance on writing publishable qualitative results sections.",
+  "registrationLabel": "Upcoming Masterclass",
+  "registrationTitle": "Cohort Registration",
+  "registrationFacts": [
+    {
+      "label": "Start Date",
+      "value": "Upcoming Cohort (Announced soon)"
+    },
+    {
+      "label": "Duration",
+      "value": "Weekend Intensive (Live)"
+    },
+    {
+      "label": "Format",
+      "value": "Live hands-on screen-share"
+    },
+    {
+      "label": "Certificate",
+      "value": "Methodology Certificate"
+    }
+  ],
+  "registrationAction": "Register your interest",
+  "registrationNote": "We will email you the syllabus and exact dates as soon as registrations open.",
+  "benefits": [
+    {
+      "title": "Hands-on NVivo Practice",
+      "description": "Work with real transcripts, code structures, and theme matrices directly."
+    },
+    {
+      "title": "Reflexive Rigour",
+      "description": "Learn how to establish trustworthiness, credibility, and audit trails."
+    },
+    {
+      "title": "Publication-Ready Writing",
+      "description": "Turn raw interview quotations into compelling narrative qualitative synthesis."
+    },
+    {
+      "title": "Supervised by Doctoral Faculty",
+      "description": "Receive guidance from researchers who actively publish qualitative studies."
+    }
+  ],
+  "benefitsTitle": "Why master qualitative methods with us"
+};
+
 export default function QualitativeResearchPage() {
-  return (
-    <>
-      <section className="pagehead blush" aria-labelledby="pg-h">
-        <div className="wrap">
-          <div className="txt">
-            <Link className="back" href="/training/" style={{ '--i': 0 }}>← All programmes</Link>
-            <h1 id="pg-h" style={{ '--i': 1 }}>{PROGRAMME.name}</h1>
-            <p className="lead" style={{ '--i': 2 }}>{PROGRAMME.desc}</p>
-            <div className="acts" style={{ '--i': 3 }}><Link className="btn" href={`/contact/?interest=Academy&about=${encodeURIComponent(PROGRAMME.name)}`}>Register interest <span className="arr" aria-hidden="true">→</span></Link></div>
-          </div>
-          <dl className="facts"><div><dt>For</dt><dd>{PROGRAMME.for}</dd></div><div><dt>Format</dt><dd>{PROGRAMME.format}</dd></div></dl>
-        </div>
-      </section>
-
-      <section className="sec" aria-labelledby="learn-h">
-        <div className="wrap split">
-          <div className="rv" style={{ display: 'grid', gap: 20, alignContent: 'start' }}>
-            <h2 id="learn-h">What you'll learn</h2>
-            <ul className="ticks lead">{PROGRAMME.learn.map((item, i) => <li key={i}>{item}</li>)}</ul>
-          </div>
-          <div className="sum-box green rv" style={{ '--i': 1 }}>
-            <h2>Next batch: coming soon</h2>
-            <dl className="sum">
-              <div><dt>Starts</dt><dd>Dates coming soon</dd></div>
-              <div><dt>Duration</dt><dd>To be announced</dd></div>
-              <div><dt>Fee</dt><dd>To be announced</dd></div>
-              <div><dt>Format</dt><dd>Live online</dd></div>
-            </dl>
-            <p><Link className="btn light" href={`/contact/?interest=Academy&about=${encodeURIComponent(PROGRAMME.name)}`}>Register interest <span className="arr" aria-hidden="true">→</span></Link></p>
-            <p className="small">Register your interest and we'll tell you as soon as dates and fees are confirmed.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="sec tint-sage" aria-labelledby="why-h">
-        <div className="wrap">
-          <div className="head center"><h2 id="why-h" className="rv">Why learn with us</h2></div>
-          <div className="cards">
-            <article className="card rv"><span className="ic"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/></svg></span><h3>Learn from a practitioner</h3><p>Taught by a psychologist who has trained more than 20 interns and supervised over 15 research projects.</p></article>
-            <article className="card rv" style={{ '--i': 1 }}><span className="ic blush"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20v-1a4.5 4.5 0 0 1 4.5-4.5h4a4.5 4.5 0 0 1 4.5 4.5v1"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M21.5 20v-1a4.5 4.5 0 0 0-3-4.2"/></svg></span><h3>Small batches</h3><p>So every learner gets personal feedback.</p></article>
-            <article className="card rv" style={{ '--i': 2 }}><span className="ic sky"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg></span><h3>Live online</h3><p>Join from anywhere in India.</p></article>
-            <article className="card rv" style={{ '--i': 3 }}><span className="ic sand"><svg className="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span><h3>Certificate</h3><p>A certificate of completion.</p></article>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+  return <ProgrammeDetail programme={PROGRAMME} content={CONTENT} />;
 }

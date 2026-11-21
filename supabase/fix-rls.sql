@@ -91,3 +91,9 @@ create policy "Users can update own profile"
   on profiles for update
   using (auth.uid() = id)
   with check (auth.uid() = id);
+
+-- Own-profile RLS alone does not protect the role column. Keep role assignment
+-- on the trusted server/service role while preserving editable contact details.
+revoke update on public.profiles from PUBLIC, anon, authenticated;
+revoke update (id, role, created_at, updated_at) on public.profiles from PUBLIC, anon, authenticated;
+grant update (full_name, phone) on public.profiles to authenticated;
