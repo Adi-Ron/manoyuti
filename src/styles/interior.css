@@ -1,4 +1,4 @@
-/* Resilio interiors: warm paper, rose, olive and slate. Scoped away from home. */
+/* Manoyuti interiors: warm paper, rose, olive and slate. Scoped away from home. */
 .interior-pages {
   --bg: #f5f1ec;
   --bg2: #ece5de;
@@ -10,7 +10,7 @@
   --muted: #716961;
   --line: #ded7cf;
   --olive: #57634d;
-  --olive-soft: #e9edE4;
+  --olive-soft: #e3e9dc;
   --blue: #4d6877;
   --blue-soft: #e9eff2;
   --t-h3: 1.4rem;
@@ -69,9 +69,9 @@
 .interior-pages .care-split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
 .interior-pages .care-prose { max-width: 66ch; color: var(--mut); }
 .interior-pages .care-prose h3 { color: var(--ink); }
-.interior-pages .care-callout { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 36px; background: var(--olive-soft); border: 1px solid #d3dacb; border-radius: 12px; }
-.interior-pages .care-callout p { max-width: 60ch; color: var(--mut); margin-bottom: 0; }
-.interior-pages .care-callout h2 { margin-bottom: 12px; }
+.interior-pages .care-callout { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 28px 40px; padding: 32px; background: var(--olive-soft); border: 1px solid #c3ceb8; border-left: 3px solid var(--olive); border-radius: 10px; }
+.interior-pages .care-callout p { max-width: 58ch; color: #515b49; font-size: .95rem; line-height: 1.65; margin: 0; }
+.interior-pages .care-callout h2 { max-width: 32ch; font-size: clamp(1.65rem,2.4vw,2rem); line-height: 1.22; margin: 0 0 12px; text-wrap: pretty; }
 .interior-pages .clean-card-subtle { background: transparent; padding: 16px 0 !important; border: 0; border-top: 1px solid var(--line); border-radius: 0; }
 .interior-pages .clean-pill { display: inline-flex; align-items: center; width: fit-content; max-width: 100%; padding: 5px 10px; border: 1px solid #d5ddcd; border-radius: 5px; background: var(--olive-soft); color: var(--olive); font-size: .7rem; line-height: 1.5; font-weight: 600; letter-spacing: .04em; }
 .interior-pages .clean-pill.neutral { background: var(--blue-soft); color: var(--blue); border-color: #d3dfe4; }
@@ -96,6 +96,8 @@
 .interior-pages .step legend h2 { margin: 0; font-size: 1.5rem; }
 .interior-pages .choices { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
 .interior-pages .choice { padding: 18px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; box-shadow: none; }
+.interior-pages .choice input { inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.interior-pages .choice > :not(input) { pointer-events: none; }
 .interior-pages .choice b { font: inherit; font-weight: 500; }
 .interior-pages .choice span { font-size: .8rem; color: var(--mut); }
 .interior-pages .choice:has(input:checked) { background: var(--olive-soft); border-color: var(--olive); box-shadow: inset 0 0 0 1px var(--olive); }
@@ -111,13 +113,19 @@
 .interior-pages .field :where(input,select,textarea):focus { border-color: var(--blue); box-shadow: 0 0 0 3px #4d687719; }
 .interior-pages .field [aria-invalid="true"] { border-color: #9b443b; background: #fff8f6; }
 .interior-pages form .two { gap: 20px; align-items: start; }
-.interior-pages .summary { display: grid; gap: 16px; }
+.interior-pages .summary { display: grid; gap: 16px; align-self: start; }
 .interior-pages .sum-box, .interior-pages .panelbox, .interior-pages form.form { padding: 28px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; box-shadow: none; }
-.interior-pages .sum-box.green { background: var(--olive-soft); border-color: #d3dacb; }
-.interior-pages .sum-box h2, .interior-pages .sum-box h3 { font-size: 1.35rem; margin-bottom: 20px; }
-.interior-pages .sum dt { font-size: .76rem; }
-.interior-pages .sum dd { font-family: inherit; font-size: .9rem; }
-.interior-pages .sum div { padding-block: 10px; }
+.interior-pages .sum-box { display: block; }
+.interior-pages .sum-box.green { background: var(--olive-soft); border-color: #c3ceb8; color: var(--ink); }
+.interior-pages .sum-box.green h2, .interior-pages .sum-box.green dd { color: #33412d; }
+.interior-pages .sum-box.green dt { color: #515b49; }
+.interior-pages .sum-box h2, .interior-pages .sum-box h3 { font-size: 1.35rem; margin: 0 0 16px; }
+.interior-pages .sum { margin: 0; gap: 0; }
+.interior-pages .sum dt { font-size: .8rem; flex: 0 0 62px; }
+.interior-pages .sum dd { margin: 0; font-family: inherit; font-size: .9rem; line-height: 1.5; overflow-wrap: anywhere; }
+.interior-pages .sum div { padding-block: 12px; gap: 16px; border-color: #c8d2be; align-items: baseline; }
+.interior-pages .sum div:last-child { padding-bottom: 0; }
+.interior-pages .sum-box .ticks { margin-bottom: 0; }
 .interior-pages .ticks { font-size: .93rem; }
 .interior-pages .ticks li { line-height: 1.65; }
 .interior-pages .hint, .interior-pages .disclaimer { font-size: .82rem; line-height: 1.6; }
@@ -156,7 +164,7 @@
   .interior-pages .sec, .interior-pages .sec.tight, .interior-pages .clean-section, .interior-pages .care-section { padding: 44px 0; }
   .interior-pages .care-grid, .interior-pages .care-grid-three, .interior-pages .care-split, .interior-pages .book-grid, .interior-pages .contact-grid, .interior-pages .split.side { grid-template-columns: 1fr; }
   .interior-pages .care-split { gap: 28px; }
-  .interior-pages .care-callout { flex-direction: column; align-items: flex-start; padding: 24px; }
+  .interior-pages .care-callout { grid-template-columns: 1fr; gap: 22px; padding: 24px; }
   .interior-pages .summary, .interior-pages .split.side > .panelbox { position: static !important; }
   .interior-pages .care-card, .interior-pages .clean-card, .interior-pages .step, .interior-pages .sum-box, .interior-pages form.form, .interior-pages .panelbox { padding: 24px; }
   .interior-pages .care-card-footer { align-items: flex-start; }
@@ -218,10 +226,10 @@
 .interior-pages .care-faq-item button { display: flex; align-items: center; justify-content: space-between; gap: 24px; width: 100%; min-height: 64px; padding: 20px 0; background: none; border: 0; color: var(--ink); text-align: left; font-family: 'Hanken Grotesk',system-ui,sans-serif; font-size: .96rem; cursor: pointer; }
 .interior-pages .care-faq-item button > span:last-child { font-size: 1.4rem; color: var(--olive); }
 .interior-pages .care-faq-item p { color: var(--mut); font-size: .92rem; margin: 0 0 22px; }
-.interior-pages .care-closing { background: var(--olive-soft); border-top: 1px solid #d3dacb; padding: 48px 0; }
-.interior-pages .care-closing .wrap { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
-.interior-pages .care-closing h2 { max-width: 24ch; margin-bottom: 12px; }
-.interior-pages .care-closing p { max-width: 56ch; color: var(--mut); margin: 0; }
+.interior-pages .care-closing { background: var(--paper); border: 0; padding: 40px 0; }
+.interior-pages .care-closing .wrap { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 28px 40px; padding: 32px; background: var(--olive-soft); border: 1px solid #c3ceb8; border-left: 3px solid var(--olive); border-radius: 10px; }
+.interior-pages .care-closing h2 { max-width: 32ch; font-size: clamp(1.65rem,2.4vw,2rem); line-height: 1.22; margin: 0 0 12px; text-wrap: pretty; }
+.interior-pages .care-closing p { max-width: 58ch; color: #515b49; font-size: .95rem; line-height: 1.65; margin: 0; }
 .interior-pages .care-practice-grid { display: grid; gap: 0; }
 .interior-pages .care-practice-grid > * { display: block; padding: 22px 0; border-bottom: 1px solid var(--line); }
 .interior-pages .care-practice-grid h3 { margin: 0 0 8px; }
@@ -261,7 +269,8 @@
   .interior-pages .care-hero-note p { font-size: 1.3rem; margin-bottom: 14px; }
   .interior-pages .care-note-mark { font-size: 1.7rem; margin-bottom: 12px; }
   .interior-pages .care-service, .interior-pages .care-founder { padding: 24px; }
-  .interior-pages .care-closing .wrap { flex-direction: column; align-items: flex-start; }
+  .interior-pages .care-closing { padding: 28px 0; }
+  .interior-pages .care-closing .wrap { grid-template-columns: 1fr; gap: 22px; padding: 24px; }
 }
 @media (max-width: 480px) {
   .interior-pages .care-values, .interior-pages .care-timeline, .interior-pages .care-concerns { grid-template-columns: 1fr; }
@@ -286,10 +295,11 @@
 .interior-pages .care-intro > .care-link { margin-bottom: 22px; font-weight: 400; font-size: .8rem; color: var(--mut); }
 .interior-pages .care-card-quiet { background: transparent; border: 0; padding: 0; }
 /* Refine the rhythm: contained callouts, open concerns, compact FAQs. */
-.interior-pages .wrap.care-callout { padding: 36px 40px; gap: 32px; }
+.interior-pages .wrap.care-callout { padding: 32px; }
 .interior-pages .care-callout > :first-child { min-width: 0; }
 .interior-pages .care-callout > :last-child { flex-shrink: 0; }
-.interior-pages .care-callout h2 { max-width: 28ch; }
+.interior-pages .care-callout > :last-child, .interior-pages .care-closing .wrap > :last-child { justify-self: start; white-space: normal; }
+.interior-pages .care-section:has(> .care-callout):last-child { padding-block: 40px; background: var(--paper); }
 .interior-pages .care-concerns-section .care-split { display: block; }
 .interior-pages .care-concerns-section .care-section-head { max-width: 700px; margin-bottom: 32px; }
 .interior-pages .care-concerns { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 24px; }
@@ -313,7 +323,8 @@
   .interior-pages .care-faq-section .care-split { gap: 32px; }
 }
 @media (max-width: 760px) {
-  .interior-pages .wrap.care-callout { padding: 28px; gap: 24px; }
+  .interior-pages .wrap.care-callout { padding: 24px; gap: 22px; }
+  .interior-pages .care-section:has(> .care-callout):last-child { padding-block: 28px; }
   .interior-pages .care-callout > :last-child { align-self: flex-start; }
   .interior-pages .care-faq-section .care-split { grid-template-columns: 1fr; }
   .interior-pages .care-hero-note { border-radius: 24px 10px 10px 10px; }
@@ -321,4 +332,18 @@
 @media (max-width: 480px) {
   .interior-pages .care-concerns { grid-template-columns: 1fr; gap: 20px; }
   .interior-pages .wrap.care-callout { padding: 24px; }
+}
+
+/* The footer is a sibling of main; keep these adjustments off the homepage. */
+#content:has(> .interior-pages) + .footer { margin-top: 0; }
+#content:has(> .interior-pages) + .footer .wrap { width: min(1120px,calc(100% - 80px)); max-width: none; padding: 36px 0 20px; gap: 24px; }
+#content:has(> .interior-pages) + .footer .foot-top { gap: 28px; }
+#content:has(> .interior-pages) + .footer .foot-brand p { margin-bottom: 0; }
+#content:has(> .interior-pages) + .footer .foot-bottom { gap: 16px; }
+#content:has(> .interior-pages) + .footer .foot-crisis { margin: 0; }
+@media (max-width: 760px) {
+  #content:has(> .interior-pages) + .footer .wrap { width: calc(100% - 40px); padding-top: 28px; }
+  #content:has(> .interior-pages) + .footer .foot-top { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+  #content:has(> .interior-pages) + .footer .foot-brand,
+  #content:has(> .interior-pages) + .footer nav[aria-label="Location"] { grid-column: 1 / -1; }
 }
