@@ -49,3 +49,6 @@ supabase/.temp/
 # Local reviews can contain private client details; never publish them.
 artifacts/
 *.zip
+
+# Netlify local state, build output, and authentication metadata
+.netlify/

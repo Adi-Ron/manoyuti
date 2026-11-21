@@ -200,3 +200,11 @@ Set these **runtime Secrets** in the Space: `SUPABASE_SERVICE_ROLE_KEY` and `ADM
 Hugging Face blocks SMTP ports. When email is enabled later, configure `RESEND_API_KEY` as a Secret and `MAIL_FROM` with a sender verified by Resend. The app automatically uses its HTTPS API; SMTP is disabled inside Spaces. Appointment emails also require `supabase/booking-confirmation.sql` in the database.
 
 Hugging Face currently requires an eligible paid account plan to create Docker Spaces. No paid hardware or subscription should be enabled without the account owner's authorization.
+
+## Netlify deployment
+
+The app is configured for Netlify with its official Next.js adapter and Node.js 22. Netlify supports the App Router, server-rendered pages, route handlers, and admin authentication.
+
+Create or link a Free-plan project, set the public Supabase URL/anon key and the private service-role key/admin email as project environment variables, and set `NEXT_PUBLIC_SITE_URL` to the project's HTTPS URL. Keep secrets out of source control. Local Netlify state and generated functions are ignored by Git.
+
+Run `netlify deploy --prod --context production` after account authorization and environment configuration. Email sending remains disabled until its provider and the appointment database migration are configured.
