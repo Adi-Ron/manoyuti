@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useToast } from '@/components/ui/Toast';
+import '@/styles/booking-receipt.css';
 
 const SERVICES = [
   { value: 'individual', name: 'Individual therapy', len: '50 minutes', fee: '₹1,500' },
@@ -62,6 +63,12 @@ function BookingForm() {
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
     setMinDate(now.toISOString().slice(0, 10));
   }, []);
+
+  useEffect(() => {
+    if (!sent) return;
+    confirmationRef.current?.focus({ preventScroll: true });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [sent]);
 
   const dateInDays = (days: number) => {
     const d = new Date();
@@ -157,13 +164,55 @@ function BookingForm() {
       if (!res.ok) throw new Error(res.status === 503 ? 'Booking requests are temporarily unavailable. Please use the contact page to reach us, or try again later. Your details are still here.' : 'Your request could not be sent. Please try again, or use the contact page to reach us. Your details are still here.');
       const result = await res.json();
       setNotificationPending(result.notification !== 'sent');
-      showToast('Thank you! We\'ll reply within 24 hours.');
       setSent(true);
-      requestAnimationFrame(() => confirmationRef.current?.focus());
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'Your request could not be sent. Please try again.');
     } finally { setSubmitting(false); }
   };
+
+  if (sent) {
+    const earliestDate = formData.from
+      ? new Date(`${formData.from}T12:00:00`).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+      : 'Flexible';
+
+    return (
+      <section className="booking-receipt-page" aria-label="Booking request received">
+        <div className="booking-receipt" ref={confirmationRef} tabIndex={-1} aria-labelledby="receipt-title">
+          <header className="booking-receipt-header">
+            <p className="booking-receipt-status"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" /></svg></span>Safely received</p>
+            <h1 id="receipt-title">Request received.</h1>
+            <p className="booking-receipt-thanks">Thank you, {formData.name.trim()}. We’ll reply to <strong>{formData.email.trim()}</strong> within 24 hours to arrange a time together.</p>
+            <p className="booking-receipt-pending">Awaiting therapist confirmation <span aria-hidden="true">·</span> No payment taken</p>
+          </header>
+
+          <section className="booking-receipt-summary" aria-labelledby="receipt-summary-title">
+            <h2 id="receipt-summary-title">The preferences you shared</h2>
+            <dl>
+              <div><dt>Support</dt><dd>{summary.service}<span>{summary.len} · {summary.fee}</span></dd></div>
+              <div><dt>How we’ll meet</dt><dd>{summary.format}</dd></div>
+              <div><dt>Preferred days & times</dt><dd>{formData.days.join(', ')}<span>{formData.times.join(', ')}</span></dd></div>
+              <div><dt>Earliest date</dt><dd>{earliestDate}</dd></div>
+            </dl>
+          </section>
+
+          <section className="booking-receipt-next" aria-labelledby="receipt-next-title">
+            <h2 id="receipt-next-title">What happens next</h2>
+            <ol>
+              <li><span aria-hidden="true">1</span><div><h3>We find a time that works.</h3><p>Your therapist reviews your preferences and contacts you. Your session is confirmed once you agree on a time.</p></div></li>
+              <li><span aria-hidden="true">2</span><div><h3>You receive the details.</h3><p>We share your session details, a short intake form, and payment information before you meet.</p></div></li>
+            </ol>
+          </section>
+
+          {notificationPending && <p className="booking-receipt-notice" role="status">Your request is saved. Email notification is currently unavailable, so you can also <a href="mailto:ishatiwari1706@gmail.com">contact your therapist directly</a>. There’s no need to submit another request.</p>}
+
+          <footer className="booking-receipt-footer">
+            <Link className="clean-btn-primary" href="/therapy/#journey-h">What to expect from therapy <span aria-hidden="true">→</span></Link>
+            <Link className="booking-receipt-contact" href="/contact/">Have a question? Contact us</Link>
+          </footer>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -180,14 +229,7 @@ function BookingForm() {
 
       <section className="sec tight" aria-label="Booking request">
         <div className="wrap book-grid">
-          {sent ? <div className="booking-confirmation" ref={confirmationRef} tabIndex={-1} role="status">
-            <span className="clean-pill">Request received</span>
-            <h2>You've taken the first step.</h2>
-            <p>Thank you, {formData.name.trim()}. We’ll reply to <strong>{formData.email}</strong> within 24 hours to arrange your session.</p>
-            <p>Your appointment is confirmed once we agree on a time together. There’s nothing to pay here.</p>
-            {notificationPending && <p>Your request is safely saved. If you need to follow up sooner, <a href="mailto:ishatiwari1706@gmail.com">email the therapist</a>. Please don’t submit the request again.</p>}
-            <Link className="clean-btn-secondary" href="/therapy/">Explore what to expect</Link>
-          </div> : <form className="book-form" onSubmit={handleSubmit} noValidate aria-busy={submitting}>
+          <form className="book-form" onSubmit={handleSubmit} noValidate aria-busy={submitting}>
             <fieldset className="step" id="s-service">
               <legend><h2>What would you like?</h2></legend>
               <div className="choices">
@@ -271,6 +313,7 @@ function BookingForm() {
                   </svg>
                   <span>
                     Your details are kept strictly confidential. Please review our{' '}
+                    <Link href="/terms-conditions/" className="policy-link" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</Link>,{' '}
                     <Link href="/policies/#privacy" className="policy-link" target="_blank" rel="noopener noreferrer">Privacy Policy</Link>
                     {' '}and{' '}
                     <Link href="/policies/#cancellation" className="policy-link" target="_blank" rel="noopener noreferrer">Cancellation Policy</Link>.
@@ -295,7 +338,7 @@ function BookingForm() {
                 <span>We reply within 24 hours. Your information is held strictly confidential.</span>
               </div>
             </div>
-          </form>}
+          </form>
 
           <aside className="summary" aria-labelledby="sum-h">
             <div className="sum-box green">

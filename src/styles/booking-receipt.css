@@ -1,0 +1,55 @@
+/* A single quiet receipt replaces the form and its sidebar after submission. */
+.interior-pages .booking-receipt-page {
+  padding: clamp(28px, 5vw, 64px) 24px clamp(40px, 6vw, 80px);
+  background: var(--bg, #f4f0eb);
+}
+.interior-pages .booking-receipt {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 56px);
+  border: 1px solid var(--line, #ded7cf);
+  border-radius: 18px;
+  background: var(--paper, #fdfbf8);
+  color: var(--ink, #302b28);
+  box-shadow: 0 12px 40px -32px #302b2838;
+}
+.interior-pages .booking-receipt:focus { outline: none; }
+.interior-pages .booking-receipt-header { max-width: 680px; }
+.interior-pages .booking-receipt-status { display: flex; align-items: center; gap: 10px; color: var(--olive, #57634d); font-size: .8rem; font-weight: 500; margin: 0 0 20px; }
+.interior-pages .booking-receipt-status > span { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #e9edE4; }
+.interior-pages .booking-receipt-status svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.interior-pages .booking-receipt h1 { font-size: clamp(2.3rem, 4.3vw, 3.3rem); line-height: 1.12; margin: 0 0 18px; }
+.interior-pages .booking-receipt-thanks { color: var(--mut, #716961); font-size: 1rem; line-height: 1.75; margin: 0; overflow-wrap: anywhere; }
+.interior-pages .booking-receipt-thanks strong { color: var(--ink, #302b28); font-weight: 500; }
+.interior-pages .booking-receipt-pending { display: flex; flex-wrap: wrap; gap: 4px 8px; color: var(--olive, #57634d); font-size: .77rem; margin: 18px 0 0; }
+.interior-pages .booking-receipt-summary { margin-top: 30px; padding: 24px 0; border-block: 1px solid var(--line, #ded7cf); }
+.interior-pages .booking-receipt h2 { font: 500 .85rem/1.5 'Hanken Grotesk', system-ui, sans-serif; letter-spacing: 0; margin: 0 0 18px; text-wrap: initial; }
+.interior-pages .booking-receipt-summary dl { display: grid; grid-template-columns: 1fr 1fr 1.2fr 1fr; gap: 22px; padding: 0; margin: 0; }
+.interior-pages .booking-receipt-summary dl > div { min-width: 0; }
+.interior-pages .booking-receipt-summary dt { color: var(--mut, #716961); font-size: .72rem; line-height: 1.5; margin-bottom: 7px; }
+.interior-pages .booking-receipt-summary dd { margin: 0; color: var(--ink, #302b28); font-size: .87rem; line-height: 1.6; overflow-wrap: anywhere; }
+.interior-pages .booking-receipt-summary dd span { display: block; color: var(--mut, #716961); font-size: .78rem; margin-top: 2px; }
+.interior-pages .booking-receipt-next { margin-top: 28px; }
+.interior-pages .booking-receipt-next ol { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; list-style: none; margin: 0; padding: 0; }
+.interior-pages .booking-receipt-next li { display: flex; align-items: flex-start; gap: 12px; }
+.interior-pages .booking-receipt-next li > span { display: grid; place-items: center; width: 26px; height: 26px; flex: none; border: 1px solid #d1d8c5; border-radius: 50%; color: var(--olive, #57634d); font-size: .72rem; margin-top: 1px; }
+.interior-pages .booking-receipt h3 { font: 500 .9rem/1.6 'Hanken Grotesk', system-ui, sans-serif; letter-spacing: 0; margin: 0 0 6px; }
+.interior-pages .booking-receipt-next li p { color: var(--mut, #716961); font-size: .82rem; line-height: 1.7; margin: 0; }
+.interior-pages .booking-receipt-notice { border-left: 2px solid #9aaab0; background: #edf1f2; padding: 14px 18px; color: #49616c; font-size: .8rem; line-height: 1.7; margin: 28px 0 0; }
+.interior-pages .booking-receipt-notice a { color: inherit; text-underline-offset: 3px; }
+.interior-pages .booking-receipt-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 26px; margin-top: 30px; }
+.interior-pages .booking-receipt-contact { color: var(--mut, #716961); font-size: .82rem; text-underline-offset: 4px; }
+.interior-pages .booking-receipt-contact:hover { color: var(--olive, #57634d); }
+@media (max-width: 700px) {
+  .interior-pages .booking-receipt-summary dl { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 26px; }
+  .interior-pages .booking-receipt-next ol { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 420px) {
+  .interior-pages .booking-receipt-page { padding-inline: 16px; }
+  .interior-pages .booking-receipt { padding: 26px 22px; border-radius: 12px; }
+  .interior-pages .booking-receipt-summary dl { gap: 20px; }
+  .interior-pages .booking-receipt-footer { align-items: stretch; gap: 18px; }
+  .interior-pages .booking-receipt-footer .clean-btn-primary { width: 100%; }
+  .interior-pages .booking-receipt-contact { text-align: center; padding-block: 6px; width: 100%; }
+}

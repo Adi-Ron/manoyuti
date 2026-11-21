@@ -64,6 +64,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           <div className="legal">
             <span>© 2026 Manoyuti. All rights reserved.</span>
             <span>
+              <span className="interior-terms-link"><Link href="/terms-conditions/">Terms &amp; conditions</Link> · </span>
               <Link href="/policies/#privacy">Privacy policy</Link> · <Link href="/policies/#cancellation">Cancellation policy</Link>
             </span>
           </div>

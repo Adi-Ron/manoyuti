@@ -502,9 +502,9 @@ a.admin-card:hover {
 .admin-shell .admin-badge.pending, .admin-shell .admin-badge.new { background: #efe5cc; color: #705722; }
 .admin-shell .admin-badge.confirmed, .admin-shell .admin-badge.replied { background: #e4eadc; color: #445637; }
 .admin-shell .admin-badge.cancelled, .admin-shell .admin-badge.archived { background: #f1e0da; color: #834e43; }
-.admin-shell .admin-empty { padding: 38px 24px; text-align: center; background: #f6f3ed; border: 1px dashed #d6cdc2; border-radius: 10px; }
-.admin-shell .admin-empty h3 { font-size: 1.4rem; color: var(--ink); margin: 12px 0 8px; }
-.admin-shell .admin-empty p { font-size: .85rem; margin: 0; }
+.admin-shell .admin-empty { display: grid; justify-items: center; gap: 8px; width: 100%; min-height: 0; margin-top: 20px; padding: 32px 24px; text-align: center; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; }
+.admin-shell .admin-empty :where(h2, h3) { width: auto; max-width: 34ch; margin: 0; color: var(--ink); font: 500 1.1rem/1.4 'Hanken Grotesk', system-ui, sans-serif; letter-spacing: -.015em; text-wrap: balance; }
+.admin-shell .admin-empty p { width: auto; max-width: 52ch; margin: 0; color: var(--mut); font: 400 .87rem/1.65 'Hanken Grotesk', system-ui, sans-serif; text-align: center; }
 .admin-empty-symbol { font-size: 2rem; line-height: 1; color: var(--admin-olive); }
 .admin-shell .admin-note { background: #ecf0f2; border-color: #d4dfe4; color: #415d6a; margin-bottom: 0; }
 .admin-quick-links { margin-top: 36px; }
@@ -575,9 +575,11 @@ a.admin-card:hover {
 .admin-shell .admin-grid-focused .admin-stat:nth-child(2) { background: #eaf0f2; border-color: #d3dfe3; }
 .admin-shell .admin-quick-links > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-.admin-shell .booking-tools { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin: 0 0 24px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
-.admin-shell .booking-tools :where(a, button) { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 9px 16px; background: transparent; border: 1px solid #c9c1b5; border-radius: 7px; color: var(--mut); font: inherit; font-size: .82rem; text-decoration: none; cursor: pointer; }
-.admin-shell .booking-tools :where([aria-pressed="true"], [aria-current="page"], .active) { background: #e5ebdc; color: #405334; border-color: #8d9b7e; }
+.admin-shell .booking-tools { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.admin-shell .booking-tools :where(a, button) { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 9px 14px; background: var(--paper); border: 1px solid #d3cbc0; border-radius: 8px; color: #62594f; font: 500 .82rem/1.4 'Hanken Grotesk', system-ui, sans-serif; text-decoration: none; cursor: pointer; transition: background-color .18s ease, border-color .18s ease; }
+.admin-shell .booking-tools :where(a, button):hover { background: #f0eee5; border-color: #a7ae99; }
+.admin-shell .booking-tools :where([aria-pressed="true"], [aria-current="page"], .active) { background: #e8eddf; color: #405334; border-color: #a5b294; }
+.admin-shell .booking-tools + .admin-hint { margin: 0 0 22px; font-size: .78rem; line-height: 1.6; }
 .admin-shell .booking-tools > div { display: flex; flex-wrap: wrap; gap: 8px; }
 .admin-shell .booking-tools > :where(p, span) { color: var(--mut); font-size: .8rem; margin: 0; }
 .admin-shell .booking-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
@@ -597,20 +599,21 @@ a.admin-card:hover {
 .admin-shell .booking-meta dd { margin: 0; font-size: .86rem; color: var(--ink); overflow-wrap: anywhere; line-height: 1.5; }
 .admin-shell .booking-note { padding: 16px 18px; margin: 20px 0 0; border-left: 3px solid #b6c0a7; background: #f0f2e9; border-radius: 0 7px 7px 0; color: #536047; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .84rem; line-height: 1.65; }
 .admin-shell .booking-note :where(p, h4) { margin-bottom: 0; }
-.admin-shell .booking-confirm-form { display: grid; gap: 20px; margin-top: 2px; padding: 24px; border: 1px solid #d7e1e5; border-radius: 10px; background: #edf2f4; }
-.admin-shell .booking-confirm-form > :where(h3, h4) { color: #3e5966; font-family: 'Hanken Grotesk', sans-serif; font-size: .95rem; font-weight: 500; margin: 0; }
-.admin-shell .booking-confirm-form > p { font-size: .82rem; color: #526b76; margin: 0; }
+.admin-shell .booking-confirm-form { display: grid; gap: 18px; margin-top: 4px; padding: 24px; border: 1px solid #d8d7c9; border-radius: 10px; background: #f4f3ed; }
+.admin-shell .booking-confirm-form > :where(h3, h4) { color: var(--ink); font: 500 1rem/1.45 'Hanken Grotesk', system-ui, sans-serif; letter-spacing: 0; margin: 0; }
+.admin-shell .booking-confirm-form > p { max-width: 65ch; font-size: .83rem; line-height: 1.6; color: var(--mut); margin: -10px 0 0; }
 .admin-shell .booking-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 20px; }
 .admin-shell .booking-field { display: grid; align-content: start; gap: 7px; min-width: 0; }
 .admin-shell .booking-field-full { grid-column: 1 / -1; }
-.admin-shell .booking-field label { color: #374e59; font-size: .8rem; font-weight: 500; }
-.admin-shell .booking-field :where(input, textarea, select) { width: 100%; min-width: 0; min-height: 48px; padding: 11px 13px; border: 1px solid #b6c6cf; border-radius: 7px; background: #fffdfa; color: var(--ink); font: inherit; font-size: .92rem; color-scheme: light; }
+.admin-shell .booking-field label { color: #514b43; font-size: .82rem; font-weight: 500; line-height: 1.5; }
+.admin-shell .booking-field :where(input, textarea, select) { width: 100%; min-width: 0; min-height: 48px; padding: 11px 13px; border: 1px solid #c8c6b8; border-radius: 7px; background: #fffdfa; color: var(--ink); font: inherit; font-size: .92rem; color-scheme: light; transition: border-color .18s ease, box-shadow .18s ease; }
 .admin-shell .booking-field textarea { min-height: 88px; resize: vertical; }
-.admin-shell .booking-field :where(input, textarea, select):focus { border-color: var(--admin-blue); box-shadow: 0 0 0 3px #4d687718; }
+.admin-shell .booking-field :where(input, textarea, select):hover { border-color: #969f86; }
+.admin-shell .booking-field :where(input, textarea, select):focus { border-color: var(--admin-olive); box-shadow: 0 0 0 3px #56644b14; }
 .admin-shell .booking-field :where(input, textarea)::placeholder { color: #827a70; font-size: .83rem; }
-.admin-shell .booking-field :where(small, .hint) { font-size: .73rem; color: #526b76; margin: 0; }
+.admin-shell .booking-field :where(small, .hint) { font-size: .76rem; line-height: 1.6; color: var(--mut); margin: 0; }
 .admin-shell .booking-form-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px 24px; }
-.admin-shell .booking-form-footer :where(small, p) { max-width: 44ch; color: #526b76; font-size: .74rem; line-height: 1.6; margin: 0; }
+.admin-shell .booking-form-footer :where(small, p) { max-width: 44ch; color: var(--mut); font-size: .78rem; line-height: 1.6; margin: 0; overflow-wrap: anywhere; }
 .admin-shell .booking-form-footer .btn { gap: 8px; white-space: normal; }
 .admin-shell .booking-confirm-form :where(button, input, select, textarea):disabled { opacity: .65; cursor: wait; }
 .admin-shell .booking-feedback { padding: 14px 18px; border: 1px solid #d6d1c4; border-radius: 8px; font-size: .85rem; line-height: 1.6; margin: 0; overflow-wrap: anywhere; }
@@ -620,6 +623,11 @@ a.admin-card:hover {
 .admin-shell .booking-confirmed :where(h3, h4) { color: #435339; font: 500 1rem/1.5 'Hanken Grotesk', sans-serif; margin-bottom: 8px; }
 .admin-shell .booking-confirmed p { margin-bottom: 7px; font-size: .86rem; overflow-wrap: anywhere; }
 .admin-shell .booking-confirmed :last-child { margin-bottom: 0; }
+.admin-shell .booking-unavailable { margin-top: 4px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: #f4f3ed; }
+.admin-shell .booking-unavailable h3 { font: 500 1rem/1.5 'Hanken Grotesk',system-ui,sans-serif; margin: 0 0 8px; }
+.admin-shell .booking-unavailable p { max-width: 68ch; color: var(--mut); font-size: .85rem; line-height: 1.65; margin: 0 0 14px; }
+.admin-shell .booking-unavailable .admin-text-link { color: var(--admin-olive); font-size: .85rem; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
+.admin-shell .admin-empty .admin-text-link { min-height: 44px; padding: 8px 12px; border: 0; background: transparent; color: var(--admin-olive); font: 500 .85rem/1.5 'Hanken Grotesk',system-ui,sans-serif; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
 @media (max-width: 600px) {
   .admin-shell .admin-grid-focused .admin-stat { padding: 20px 16px; }
   .admin-shell .admin-quick-links > div { grid-template-columns: 1fr; }
@@ -633,6 +641,10 @@ a.admin-card:hover {
   .admin-shell .booking-form-footer { align-items: flex-start; }
   .admin-shell .booking-form-footer .btn { width: 100%; }
   .admin-shell .booking-tools { align-items: flex-start; }
+  .admin-shell .booking-tools :where(a, button) { flex: 1 1 auto; }
+  .admin-shell .booking-tools + .admin-hint { margin-bottom: 18px; }
+  .admin-shell .admin-empty { padding: 28px 18px; gap: 10px; }
+  .admin-shell .admin-empty :where(h2, h3) { font-size: 1.05rem; }
   .admin-shell .booking-confirmed { padding: 18px; }
 }
 /* Quiet, accessible sign-in matching the practice workspace. */
@@ -658,7 +670,8 @@ a.admin-card:hover {
 .admin-login-card .admin-login-foot { margin: 24px 0 0; padding-top: 22px; border-top: 1px solid #ded7cf; font-size: .85rem; }
 /* Keep setup notices and booking controls aligned with the cards. */
 .admin-content > .admin-note { display: block; width: 100%; max-width: none; margin: 0 0 12px; padding: 16px 20px; }
-.admin-content .booking-tools { justify-content: flex-start; gap: 10px; margin-top: 24px; }
+.admin-shell .admin-content > .admin-note.booking-setup-note { background: #f4f3ed; border-color: #d8d7c9; color: var(--mut); font-size: .83rem; line-height: 1.65; padding: 14px 18px; }
+.admin-content .booking-tools { justify-content: flex-start; gap: 8px; margin-top: 24px; }
 .admin-content .booking-tools button { display: inline-flex; align-items: center; gap: 10px; }
 .admin-content .booking-tools button > span { min-width: 20px; padding: 1px 5px; border-radius: 4px; background: #302b2809; font-size: .7rem; }
 .booking-email-status { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 18px; margin-block: 18px; color: var(--mut); }

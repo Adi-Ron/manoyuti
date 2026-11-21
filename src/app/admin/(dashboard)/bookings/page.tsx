@@ -21,8 +21,7 @@ export default async function AdminBookingsPage() {
   const mailReady = isBookingMailConfigured();
   return <>
     <div className="admin-top"><div><span className="admin-eyebrow">From reaching out to meeting</span><h1>Appointments</h1><p>Review requests, agree on a time, and send a personal confirmation.</p></div></div>
-    {!setupReady && !failed && <p className="admin-note" role="status">Appointment confirmations need a database update. Run <code>supabase/booking-confirmation.sql</code> in this project's Supabase SQL Editor. Existing requests are safe.</p>}
-    {!mailReady && <p className="admin-note" role="status">Email delivery is not configured yet. Requests are saved here; configure the email provider to enable therapist notifications and client confirmations.</p>}
+    {!failed && (!setupReady || !mailReady) && <p className="admin-note booking-setup-note" role="status">Requests are saved. {!setupReady && !mailReady ? 'Online scheduling and automatic email are not set up yet.' : !setupReady ? 'Online scheduling is not set up yet.' : 'Automatic email is currently off.'} Use a client’s email or phone link to arrange a session directly.</p>}
     {failed ? <div className="admin-panel"><p className="admin-note" role="alert">Could not load requests. Refresh the page or check the database connection.</p></div> : <BookingList rows={rows} setupReady={setupReady} mailReady={mailReady} today={new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date())} />}
   </>;
 }
