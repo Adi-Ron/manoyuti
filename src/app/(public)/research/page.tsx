@@ -5,50 +5,46 @@ import Link from 'next/link';
 const RESEARCH_PILLARS = [
   {
     id: 'womens-health',
-    num: '01',
-    title: "Women's Health & Hormonal Wellbeing",
-    tag: 'Primary Focus',
-    lead: 'Investigating how conditions like PCOS, endometriosis, and reproductive transitions shape mood, anxiety, and self-image.',
+    title: 'Women’s health & wellbeing',
+    tag: 'Hormones & mental health',
+    lead: 'How hormonal conditions and reproductive transitions affect mood, self-image, and the support women need.',
     details: [
-      'Emotional and psychiatric manifestations of Polycystic Ovary Syndrome (PCOS)',
-      'Perinatal mental health, postpartum mood shifts, and fertility stress',
-      'Body image distress and psychosocial coping strategies among Indian women'
+      'PCOS, mood, and body image',
+      'Perinatal mental health and fertility stress',
+      'Coping and support in the Indian context'
     ]
   },
   {
     id: 'health-psychology',
-    num: '02',
-    title: 'Health Psychology & Chronic Illness',
-    tag: 'Mind-Body Care',
-    lead: 'Examining psychological adaptation to medical conditions, treatment adherence, and holistic mind-body recovery.',
+    title: 'Living with long-term illness',
+    tag: 'Health psychology',
+    lead: 'Understanding the emotional side of illness, from everyday coping to communication and safety in healthcare.',
     details: [
-      'Stress vulnerability, autonomic regulation, and lifestyle intervention design',
-      'Doctor-patient communication and psychological safety in clinical settings',
-      'Mindfulness and cognitive resilience in long-term chronic pain management'
+      'Stress, lifestyle, and emotional wellbeing',
+      'Communication and psychological safety in healthcare',
+      'Mindfulness and coping with chronic pain'
     ]
   },
   {
     id: 'intervention-dev',
-    num: '03',
-    title: 'Intervention Development & Feasibility',
-    tag: 'Translational Science',
-    lead: 'Developing, piloting, and standardizing accessible psychosocial interventions adapted to the Indian cultural context.',
+    title: 'Developing better support',
+    tag: 'Intervention design',
+    lead: 'Creating and testing practical psychological support that fits people’s lives, communities, and cultural context.',
     details: [
-      'Culturally adapted CBT and ACT modules for Indian young adults',
-      'Brief, high-impact psychoeducational programmes for educational institutions',
-      'Measuring clinical feasibility, client retention, and therapeutic outcome metrics'
+      'Culturally adapted CBT and ACT for young adults',
+      'Brief psychoeducation for schools and colleges',
+      'Feasibility, engagement, and therapeutic outcomes'
     ]
   },
   {
     id: 'methods-lab',
-    num: '04',
-    title: 'Qualitative Methodology & Mixed Methods',
-    tag: 'Scientific Rigour',
-    lead: 'Giving depth to scientific inquiry through advanced thematic analysis, semi-structured interviews, and mixed-method synthesis.',
+    title: 'Understanding lived experience',
+    tag: 'Qualitative & mixed methods',
+    lead: 'Bringing people’s stories and research data together to understand what matters, and why.',
     details: [
-      'Rigorous thematic coding protocols in NVivo and reflexive qualitative inquiry',
-      'Psychometric validation of standardized screening instruments in India',
-      'Survey experiment designs using Qualtrics, R, JAMOVI, and SPSS'
+      'Interviews and reflexive thematic analysis',
+      'Screening tools and psychometric validation',
+      'Survey design and mixed-method analysis'
     ]
   }
 ];
@@ -57,14 +53,14 @@ const MENTORING_TRACKS = [
   {
     title: 'PhD Proposal & Thesis Mentoring',
     audience: 'PhD Applicants & Doctoral Scholars',
-    desc: 'One-to-one scholarly mentorship to formulate airtight research questions, conduct comprehensive literature syntheses, identify genuine research gaps, and design ethically sound methodologies.',
+    desc: 'One-to-one support to refine your research question, review the literature, and design a thoughtful, ethical study.',
     tag: 'Doctoral Track',
     link: '/contact/?interest=Research%20mentoring'
   },
   {
     title: 'PG & UG Dissertation Guidance',
     audience: 'Masters & Bachelors Students',
-    desc: 'Step-by-step guidance through your academic dissertation—from ethical board submissions and participant recruitment to statistical analysis, thematic coding, and thesis write-up.',
+    desc: 'Guidance through your dissertation, from ethics and participant recruitment to analysis and writing.',
     tag: 'Dissertation Track',
     link: '/training/dissertation-mentoring/'
   }
@@ -102,22 +98,22 @@ export default function ResearchPage() {
         </div>
       </section>
 
-      <section className="care-section care-section-soft" aria-labelledby="research-areas">
+      <section className="care-section care-research-section" aria-labelledby="research-areas">
         <div className="wrap">
           <div className="care-section-head">
             <span className="care-kicker">Areas of inquiry</span>
             <h2 id="research-areas">What we are exploring</h2>
-            <p>Four connected areas guide our research and intervention development.</p>
+            <p>Questions about everyday life, studied with care. Explore the four areas that guide our work.</p>
           </div>
-          <div className="care-grid">
+          <div className="research-area-grid">
             {RESEARCH_PILLARS.map(area => (
-              <article key={area.id} className="care-card">
-                <span className="care-kicker">{area.tag}</span>
+              <article key={area.id} className="research-area">
+                <span className="research-area-tag">{area.tag}</span>
                 <h3>{area.title}</h3>
                 <p>{area.lead}</p>
-                <details className="care-details">
-                  <summary>Explore research topics</summary>
-                  <ul className="care-list">{area.details.map(point => <li key={point}>{point}</li>)}</ul>
+                <details className="research-topics">
+                  <summary><span>View focus topics <span className="research-topic-count">{area.details.length}</span></span><span className="research-topics-toggle" aria-hidden="true">+</span></summary>
+                  <ul>{area.details.map(point => <li key={point}>{point}</li>)}</ul>
                 </details>
               </article>
             ))}
