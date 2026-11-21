@@ -1,0 +1,12 @@
+.git
+.next
+.netlify
+node_modules
+.env
+.env.*
+!.env.example
+artifacts
+tests
+tools
+*.log
+*.zip

@@ -52,3 +52,4 @@ artifacts/
 
 # Netlify local state, build output, and authentication metadata
 .netlify/
+.env*

@@ -4,9 +4,10 @@ import '@/styles/globals.css';
 import { ToastProvider } from '@/components/ui/Toast';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'Manoyuti | Psychotherapy, Research and Training in Bengaluru',
     template: '%s | Manoyuti'
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    url: siteUrl,
     siteName: 'Manoyuti',
     title: 'Manoyuti | Psychotherapy, Research and Training in Bengaluru',
     description: 'Manoyuti brings together evidence-based psychotherapy, psychology research and training for students, led by psychologist Isha Tiwari in Bengaluru and online across India.',
